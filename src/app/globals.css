@@ -5,6 +5,9 @@
 :root {
   /* Colors */
   --color-main: #0EB77F;
+  --color-navActive: #34C759;
+  --color-navNomal: #C7C7CC;
+  --color-navBg: #F9F9F9;
 
   /* Fonts */
   --font-main: "Pretendard", sans-serif;
