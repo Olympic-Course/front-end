@@ -1,0 +1,55 @@
+/* globals.css */
+@import "tailwindcss";
+
+/* 커스텀 색상 변수 설정 */
+:root {
+  /* Colors */
+  --color-main: #0EB77F;
+
+  /* Fonts */
+  --font-main: "Pretendard", sans-serif;
+
+  /* Font sizes */
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  /* Spacing */
+  --spacing-section: 48px;
+  --vh: 100%;
+}
+
+html {
+  /* 모바일에서 기본 폰트 크기를 안정화 */
+  font-size: 16px;
+
+  background-color: #fafafa;
+  
+  /* 화면이 작을 때 자동 확대/축소 방지 */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 전역 스타일 설정 */
+body {
+  width: 100%;
+  max-width: 480px;        /* 모바일 기준 너비 제한 (원하는 값으로 조절) */
+  margin: 0 auto;          /* 가운데 정렬 */
+  background-color: #ffffff;
+  font-family: var(--font-main, sans-serif);
+  overflow-x: hidden;      /* 가로 스크롤 방지 */
+  min-height: 100vh;
+}
+
+/* 폰트 설정 */
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/Pretendard-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
