@@ -1,6 +1,7 @@
 import '../globals.css';
 import Image from 'next/image';
 import logoImage from "/public/img/OlCo_logo_2.png";
+import Navbar from '@/components/common/navbar';
 
 export default function Layout({
     children,
@@ -19,9 +20,7 @@ export default function Layout({
                 />
             </div>
             {children}
-            <div className='bg-white w-full rounded-lg p-6'>
-                네비게이션바
-            </div>
+            <Navbar/>
         </div>
     );
 }
