@@ -15,7 +15,7 @@ export default function Layout({
                 height={250} 
                 alt="Logo"
             />
-            <div className='bg-white w-full rounded-lg p-6'>
+            <div className='bg-white w-full rounded-lg px-6 py-12'>
                 {children}
             </div>
         </div>

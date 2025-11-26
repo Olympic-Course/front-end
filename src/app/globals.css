@@ -1,7 +1,7 @@
 /* globals.css */
 @import "tailwindcss";
 
-/* 커스텀 색상 변수 설정 */
+/* 커스텀 변수 설정 */
 :root {
   /* Colors */
   --color-main: #0EB77F;
@@ -19,6 +19,9 @@
   /* Spacing */
   --spacing-section: 48px;
   --vh: 100%;
+
+  /* Border */
+  --border-thin: 1px;
 }
 
 html {
@@ -47,6 +50,20 @@ body {
   font-family: "Pretendard";
   src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/Pretendard-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/Pretendard-SemiBold.woff2") format("woff2");
+  font-weight: 600;
   font-style: normal;
 }
 
