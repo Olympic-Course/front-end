@@ -2,6 +2,7 @@
 
 import AuthInput from "@/components/user/AuthInput"
 import PrimaryButton from "@/components/common/PrimaryButton"
+import LinkButton from "@/components/user/LinkButton";
 import { useState } from "react";
 
 export default function Page() {
@@ -37,7 +38,12 @@ export default function Page() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <div className="flex justify-center mt-3">
+        <div className="flex justify-evenly">
+          <LinkButton href="/guest_laguage_select" label="비회원으로 즐기기" />
+          <LinkButton href="/signup" label="아직 회원이 아니신가요?" />
+        </div>
+
+        <div className="flex justify-center mt-2">
           <PrimaryButton
             label="로그인"
             onClick={handleSubmit}

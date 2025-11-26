@@ -11,8 +11,8 @@ export default function Layout({
         <div className='flex flex-col items-center justify-center h-screen bg-(--color-main) gap-10 px-9'>
             <Image
                 src={logoImage}
-                width={250}
-                height={250} 
+                width={200}
+                height={200} 
                 alt="Logo"
             />
             <div className='bg-white w-full rounded-lg px-6 py-12'>
