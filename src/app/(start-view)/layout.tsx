@@ -8,7 +8,7 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-(--color-main) gap-6 px-9'>
+        <div className='flex flex-col items-center justify-center h-full min-h-screen bg-(--color-main) gap-6 p-9'>
             <Image
                 src={logoImage}
                 width={180}
