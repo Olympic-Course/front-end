@@ -10,7 +10,7 @@ export default function Page() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("ko");
 
 
   function handleSubmit(e?: React.FormEvent) {
