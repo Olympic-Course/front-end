@@ -50,7 +50,7 @@ export default function Page() {
           type="password"
           value={password}
           placeholder="비밀번호를 입력하세요"
-
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
         <AuthInput
