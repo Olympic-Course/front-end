@@ -5,9 +5,12 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import UserCourseList from "@/components/user/UserCourseList";
 import UserSettingList from "@/components/user/UserSettingList";
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Modal from "@/components/common/Modal";
 
 export default function Page() {
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
 
   function handleSubmit(e?: React.FormEvent) {
     if (e) e.preventDefault();
@@ -42,7 +45,7 @@ export default function Page() {
         />
         <UserSettingList
           label={"비밀번호 변경"}
-          onClick={() => router.push("/user")}
+          onClick={() => setShowModal(true)}
         />
         <UserSettingList
           label={"계정탈퇴"}
@@ -57,6 +60,19 @@ export default function Page() {
           onClick={handleSubmit}
         />
       </div>
+
+      {/* 모달 표시 */}
+      {showModal && (
+        <Modal
+          title="비밀번호 변경"
+          buttonLabel="저장"
+          onClose={() => setShowModal(false)}
+        >
+          <div className="flex flex-col justify-start items-center my-3 bg-amber-200">
+            콘텐츠 영역
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }

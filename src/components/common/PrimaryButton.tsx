@@ -8,7 +8,7 @@ export default function PrimaryButton({ onClick, label }: PrimaryButtonProps) {
         <button
             type="button"
             onClick={onClick}
-            className="text-sm font-semibold px-8 py-3 rounded-md bg-(--color-main) text-white"
+            className="text-xs font-semibold px-8 py-3 rounded-md bg-(--color-main) text-white"
         >
             {label}
         </button>
