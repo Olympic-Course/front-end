@@ -17,19 +17,12 @@ export default function Page() {
   const [showAccountDeleteModal, setShowAccountDeleteModal] = useState(false);
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
-  function handleSubmit(e?: React.FormEvent) {
-    if (e) e.preventDefault();
-
-    // 실제 로그인 요청 처리
-    console.log("로그아웃 요청");
-  }
-
   return (
     <div className="flex flex-col h-full px-10 py-6 justify-center items-center gap-5">
       {/* 닉네임 및 이메일 */}
-      <div className="w-full flex justify-start items-end gap-3">
+      <div className="w-full flex flex-col justify-start items-start gap-3">
         <span className="text-xl font-bold">닉네임</span>
-        <span className="text-sm font-medium text-gray-200">yoonj310@gmail.com</span>
+        <span className="text-sm font-medium text-gray-300">yoonj310@gmail.com</span>
       </div>
 
       {/* 작성글 및 좋아요 */}
