@@ -7,10 +7,15 @@ import UserSettingList from "@/components/user/UserSettingList";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import Modal from "@/components/common/Modal";
+import UpdatePasswordModal from "@/components/user/modal/UpdatePasswordModal";
+import AccountDeleteModal from "@/components/user/modal/AccountDeleteModal";
+import LogoutConfirmModal from "@/components/user/modal/LogoutConfirmModal";
 
 export default function Page() {
   const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
+  const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [showAccountDeleteModal, setShowAccountDeleteModal] = useState(false);
+  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
 
   function handleSubmit(e?: React.FormEvent) {
     if (e) e.preventDefault();
@@ -45,11 +50,11 @@ export default function Page() {
         />
         <UserSettingList
           label={"비밀번호 변경"}
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowUpdatePasswordModal(true)}
         />
         <UserSettingList
           label={"계정탈퇴"}
-          onClick={() => router.push("/user")}
+          onClick={() => setShowAccountDeleteModal(true)}
         />
       </div>
 
@@ -57,20 +62,40 @@ export default function Page() {
       <div className="flex justify-center mt-2">
         <PrimaryButton
           label="로그아웃"
-          onClick={handleSubmit}
+          onClick={() => setShowLogoutConfirmModal(true)}
         />
       </div>
 
-      {/* 모달 표시 */}
-      {showModal && (
+      {/* 비밀번호 변경 모달 표시 */}
+      {showUpdatePasswordModal && (
         <Modal
           title="비밀번호 변경"
-          buttonLabel="저장"
-          onClose={() => setShowModal(false)}
+          buttonLabel="변경"
+          onClose={() => setShowUpdatePasswordModal(false)}
         >
-          <div className="flex flex-col justify-start items-center my-3 bg-amber-200">
-            콘텐츠 영역
-          </div>
+          <UpdatePasswordModal />
+        </Modal>
+      )}
+
+      {/* 계정탈퇴 모달 표시 */}
+      {showAccountDeleteModal && (
+        <Modal
+          title="계정탈퇴"
+          buttonLabel="탈퇴"
+          onClose={() => setShowAccountDeleteModal(false)}
+        >
+          <AccountDeleteModal />
+        </Modal>
+      )}
+
+      {/* 로그아웃 모달 표시 */}
+      {showLogoutConfirmModal && (
+        <Modal
+          title="로그아웃"
+          buttonLabel="로그아웃"
+          onClose={() => setShowLogoutConfirmModal(false)}
+        >
+          <LogoutConfirmModal />
         </Modal>
       )}
     </div>
