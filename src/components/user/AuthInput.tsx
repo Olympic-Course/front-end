@@ -26,13 +26,13 @@ export default function AuthInput({
             <label className="text-sm font-medium flex items-center gap-1">
                 {label}
                 {required && <span className="text-red-500">*</span>}
-                {/* {rightAddon && <span className="ml-1">{rightAddon}</span>} */}
+
             </label>
             <div className="relative w-full">
                 <input
                     {...props}
                     className={
-                        "w-full p-3 border border-gray-100 rounded-lg text-sm font-medium focus:outline-(--color-main) placeholder:text-gray-300 placeholder:font-medium"
+                        `w-full p-3 border border-gray-100 rounded-lg text-sm font-medium focus:outline-(--color-main) placeholder:text-gray-300 placeholder:font-medium ${className}`
                     }
                 />
                 {rightAddon && (
