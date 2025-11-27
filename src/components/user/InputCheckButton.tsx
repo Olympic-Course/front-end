@@ -1,10 +1,10 @@
-interface DuplicateButtonProps {
+interface InputCheckButtonProps {
     onClick: () => void;
     disabled?: boolean;
     label?: string;
 }
 
-export default function DuplicateButton({ onClick, disabled = false, label = "중복" }: DuplicateButtonProps) {
+export default function InputCheckButton({ onClick, disabled = false, label = "중복" }: InputCheckButtonProps) {
     return (
         <button
             type="button"

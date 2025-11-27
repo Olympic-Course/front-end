@@ -1,16 +1,18 @@
-import DuplicateButton from "./DuplicateButton";
+import InputCheckButton from "./InputCheckButton";
 
 interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
     required?: boolean;
     type: string;
     rightAddon?: boolean; // 중복 버튼
+    passWordCheck?: boolean; //비밀번호 확인 버튼
 }
 
 export default function AuthInput({
     label,
     required = false,
     rightAddon = false,
+    passWordCheck = false,
     className,
     ...props
 }: AuthInputProps) {
@@ -35,10 +37,21 @@ export default function AuthInput({
                 />
                 {rightAddon && (
                     <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                        <DuplicateButton
+                        <InputCheckButton
                             onClick={function (): void {
                                 throw new Error("Function not implemented.");
                             }}
+                        />
+                    </div>
+                )}
+
+                {passWordCheck && (
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                        <InputCheckButton
+                            onClick={function (): void {
+                                throw new Error("Function not implemented.");
+                            }}
+                            label="확인"
                         />
                     </div>
                 )}
