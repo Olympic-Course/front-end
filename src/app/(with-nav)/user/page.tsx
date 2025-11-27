@@ -10,12 +10,14 @@ import Modal from "@/components/common/Modal";
 import UpdatePasswordModal from "@/components/user/modal/UpdatePasswordModal";
 import AccountDeleteModal from "@/components/user/modal/AccountDeleteModal";
 import LogoutConfirmModal from "@/components/user/modal/LogoutConfirmModal";
+import AccountEditModal from "@/components/user/modal/AccountEditModal";
 
 export default function Page() {
   const router = useRouter();
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const [showAccountDeleteModal, setShowAccountDeleteModal] = useState(false);
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+  const [showAccountEditModal, setShowAccountEditModal] = useState(false);
 
   return (
     <div className="flex flex-col h-full px-10 py-6 justify-center items-center gap-5">
@@ -39,7 +41,7 @@ export default function Page() {
       <div className="flex flex-col w-full py-3 border-t border-b border-gray-200">
         <UserSettingList
           label={"회원 정보 수정"}
-          onClick={() => router.push("/user/edit")}
+          onClick={() => setShowAccountEditModal(true)}
         />
         <UserSettingList
           label={"비밀번호 변경"}
@@ -58,6 +60,17 @@ export default function Page() {
           onClick={() => setShowLogoutConfirmModal(true)}
         />
       </div>
+
+      {/* 회원 정보 수정 모달 표시 */}
+      {showAccountEditModal && (
+        <Modal
+          title="회원 정보 수정"
+          buttonLabel="저장"
+          onClose={() => setShowAccountEditModal(false)}
+        >
+          <AccountEditModal />
+        </Modal>
+      )}
 
       {/* 비밀번호 변경 모달 표시 */}
       {showUpdatePasswordModal && (

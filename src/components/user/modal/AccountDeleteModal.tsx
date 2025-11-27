@@ -10,6 +10,7 @@ export default function AccountDeleteModal() {
             <AuthInput
                 label={"현재 비밀번호 확인"}
                 type={"password"}
+                placeholder="현재 비밀번호를 입력해주세요"
             />
         </div>
     );
