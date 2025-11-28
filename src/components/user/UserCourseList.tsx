@@ -15,7 +15,8 @@ interface UserCourseListProps {
 
 export default function UserCourseList({ courseId, thumbnail, title, writer, tag, liked, likeNum }: UserCourseListProps) {
 
-    const displayThumbnail = thumbnail || "/img/OlCo_logo_3.png";
+    const displayThumbnail =
+        thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
 
     return (
         <Link href={`/courses/${courseId}`} className="flex w-full gap-2">
