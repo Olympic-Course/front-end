@@ -2,7 +2,6 @@
 
 import { FileText, Heart } from "lucide-react";
 import PrimaryButton from "@/components/common/PrimaryButton";
-import UserCourseList from "@/components/user/UserCourseList";
 import UserSettingList from "@/components/user/UserSettingList";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
@@ -11,6 +10,7 @@ import UpdatePasswordModal from "@/components/user/modal/UpdatePasswordModal";
 import AccountDeleteModal from "@/components/user/modal/AccountDeleteModal";
 import LogoutConfirmModal from "@/components/user/modal/LogoutConfirmModal";
 import AccountEditModal from "@/components/user/modal/AccountEditModal";
+import UserCourseButton from "@/components/user/UserCourseButtom";
 
 export default function Page() {
   const router = useRouter();
@@ -30,10 +30,10 @@ export default function Page() {
       {/* 작성글 및 좋아요 */}
       <div className="w-full flex gap-5">
         <div className="flex-1">
-          <UserCourseList icon={FileText} label="작성글" count={8} href="/user/posts" />
+          <UserCourseButton icon={FileText} label="작성글" count={8} href="/user/posts" />
         </div>
         <div className="flex-1">
-          <UserCourseList icon={Heart} label="좋아요" count={12} href="/user/likes" />
+          <UserCourseButton icon={Heart} label="좋아요" count={12} href="/user/likes" />
         </div>
       </div>
 

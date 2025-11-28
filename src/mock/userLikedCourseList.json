@@ -1,0 +1,29 @@
+[
+    {
+        "courseId": 4,
+        "thumbnail": "",
+        "title": "쓸쓸한 가을날을 즐기는 코스",
+        "writer": "듀?",
+        "tag" : ["연인과", "따뜻함"],
+        "likeNum": 259,
+        "liked": true
+    },
+    {
+        "courseId": 32,
+        "thumbnail": "",
+        "title": "벚꽃 나들이🌸",
+        "writer": "듀?",
+        "tag" : ["혼자", "뚜벅이", "추움"],
+        "likeNum": 124,
+        "liked": false
+    },
+    {
+        "courseId": 42,
+        "thumbnail": "",
+        "title": "콘서트 제대로 뿌시는 코스 콘서트 제대로 뿌시는 코스 콘서트 제대로 뿌시는 코스",
+        "writer": "듀?",
+        "tag" : ["반려동물", "뚜벅이", "추움", "뚜벅이", "추움", "뚜벅이", "추움", "뚜벅이", "추움"],
+        "likeNum": 82,
+        "liked": true
+    }
+]
