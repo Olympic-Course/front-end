@@ -18,7 +18,7 @@ export default function UserCourseList({ courseId, thumbnail, title, writer, tag
     const displayThumbnail = thumbnail || "/img/OlCo_logo_3.png";
 
     return (
-        <Link href={`/courses/${courseId}`} className="flex w-full h-gap-3">
+        <Link href={`/courses/${courseId}`} className="flex w-full gap-2">
             {/* 썸네일 이미지 영역 */}
             <div className="relative w-28 aspect-4/3 border border-[#E1E1E1] rounded-lg overflow-hidden shrink-0 bg-gray-100">
                 <Image
