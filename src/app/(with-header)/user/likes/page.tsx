@@ -15,6 +15,7 @@ export default function Page() {
             <UserCourseList
               key={course.courseId}
               courseId={course.courseId}
+              thumbnail={course.thumbnail}
               title={course.title}
               writer={course.writer}
               tag={course.tag}

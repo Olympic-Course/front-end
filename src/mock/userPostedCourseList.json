@@ -1,0 +1,66 @@
+[
+    {
+        "courseId": 1,
+        "thumbnail": "",
+        "title": "연인과 함께 즐기는 데이트 코스",
+        "writer": "듀?",
+        "tag": [
+            "연인과",
+            "따뜻함"
+        ],
+        "likeNum": 259,
+        "liked": true
+    },
+    {
+        "courseId": 2,
+        "thumbnail": "",
+        "title": "콘서트에서 써먹을 좋은 코스를 소개합니다",
+        "writer": "듀?",
+        "tag": [
+            "혼자",
+            "뚜벅이",
+            "추움"
+        ],
+        "likeNum": 259,
+        "liked": true
+    },
+    {
+        "courseId": 3,
+        "thumbnail": "",
+        "title": "지쳤나요? 네🚨🚨🚨",
+        "writer": "듀?",
+        "tag": [
+            "혼자",
+            "뚜벅이",
+            "추움"
+        ],
+        "likeNum": 259,
+        "liked": true
+    },
+    {
+        "courseId": 4,
+        "thumbnail": "",
+        "title": "가나디와 함께하는 산책 코스",
+        "writer": "듀?",
+        "tag": [
+            "반려동물",
+            "뚜벅이",
+            "추움"
+        ],
+        "likeNum": 259,
+        "liked": true
+    },
+    {
+        "courseId": 5,
+        "thumbnail": "",
+        "title": "쓸쓸한 가을날을 즐기는 코스",
+        "writer": "듀?",
+        "tag": [
+            "혼자",
+            "뚜벅이",
+            "추움"
+        ],
+        "likeNum": 259,
+        "liked": true
+    }
+]
