@@ -4,7 +4,7 @@ interface TagProps {
 
 export default function Tag({label}: TagProps){
     return(
-        <div className="border border-(--color-main) rounded-full text-xs text-(--color-main) px-2.5 py-1.5 font-medium">
+        <div className="border border-(--color-main) rounded-full text-[9px] text-(--color-main) px-2 py-1 font-medium">
             {label}
         </div>
     );
