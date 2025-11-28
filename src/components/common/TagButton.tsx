@@ -1,11 +1,13 @@
 interface TagButtonProps {
     label: string;
     active: boolean;
+    onClick?: () => void;
 }
 
-export default function TagButton({ label, active }: TagButtonProps) {
+export default function TagButton({ label, active, onClick }: TagButtonProps) {
     return (
         <button
+            onClick={onClick}
             className={
                 `rounded-full text-[11px] px-2.5 py-1.5 font-medium ` +
                 (active
