@@ -28,6 +28,5 @@ export default function UserCourseButton({ icon: Icon, label, count, href }: Use
                 </div>
             </div>
         </Link>
-
     );
 }

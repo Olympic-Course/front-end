@@ -15,12 +15,13 @@ export default function Layout({
                 <Image
                     src={logoImage}
                     width={100}
-                    // height={}
                     alt="Logo"
                 />
             </div>
-            {children}
-            <Navbar/>
+            <div className='flex-1 overflow-y-auto scrollbar-none'>
+                {children}
+            </div>
+            <Navbar />
         </div>
     );
 }
