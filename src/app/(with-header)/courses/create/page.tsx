@@ -5,6 +5,7 @@ import HeaderLayout from "@/components/common/HeaderLayout";
 import MenuSection from "@/components/common/MenuSection";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import CourseLocationItem from "@/components/course/CourseLocationItem";
+import LocationPhoto from "@/components/course/LocationPhoto";
 
 export default function Page() {
   const [memoActive, setMemoActive] = useState(false);
@@ -21,13 +22,16 @@ export default function Page() {
               onClick={() => setMemoActive(prev => !prev)}
             />
           </div>
+
+          <LocationPhoto/>
+          
           <div className="flex w-full gap-3 mt-5">
             <SecondaryButton
-              onClick={() => {}}
+              onClick={() => { }}
               label={"장소 추가"}
             />
             <SecondaryButton
-              onClick={() => {}}
+              onClick={() => { }}
               label={"장소 편집"}
             />
           </div>
