@@ -17,20 +17,18 @@ export default function Page() {
         <div className="w-full flex flex-col gap-4 mt-2">
           <SearchBar />
           <TagSelectSection />
-          <div className="flex flex-col gap-3 w-full">
-            <div className="grid grid-cols-2 gap-3 w-full">
-              {courseList.courses.map((course) => (
-                <RecommendedCourseCard
-                  key={course.courseId}
-                  courseId={course.courseId}
-                  thumbnail={course.thumbnail}
-                  title={course.title}
-                  writer={course.writer}
-                  likeNum={course.likeNum}
-                  liked={course.liked}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {courseList.courses.map((course) => (
+              <RecommendedCourseCard
+                key={course.courseId}
+                courseId={course.courseId}
+                thumbnail={course.thumbnail}
+                title={course.title}
+                writer={course.writer}
+                likeNum={course.likeNum}
+                liked={course.liked}
+              />
+            ))}
           </div>
         </div>
       </MenuSection>
