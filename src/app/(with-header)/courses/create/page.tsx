@@ -5,7 +5,7 @@ import HeaderLayout from "@/components/common/HeaderLayout";
 import MenuSection from "@/components/common/MenuSection";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import CourseLocationItem from "@/components/course/CourseLocationItem";
-import LocationPhoto from "@/components/course/LocationPhoto";
+import CourseLocationMemo from "@/components/course/CourseLocationMemo";
 
 export default function Page() {
   const [memoActive, setMemoActive] = useState(false);
@@ -23,8 +23,10 @@ export default function Page() {
             />
           </div>
 
-          <LocationPhoto/>
-          
+          <CourseLocationMemo
+            locationMemo={"춥거나 더울때는 소마미술관으로 대피🚨"}
+          />
+
           <div className="flex w-full gap-3 mt-5">
             <SecondaryButton
               onClick={() => { }}
