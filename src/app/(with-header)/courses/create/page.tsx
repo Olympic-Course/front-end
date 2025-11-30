@@ -6,9 +6,13 @@ import MenuSection from "@/components/common/MenuSection";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import CourseLocationItem from "@/components/course/CourseLocationItem";
 import CourseLocationMemo from "@/components/course/CourseLocationMemo";
+import OptionSelectButtonSection from "@/components/course/OptionSelectButtonSection";
 
 export default function Page() {
   const [memoActive, setMemoActive] = useState(false);
+
+  const [selectedDuration, setSelectedDuration] = useState("");
+  const [selectedCost, setSelectedCost] = useState("");
 
   return (
     <HeaderLayout title={"코스 작성하기"}>
@@ -37,6 +41,20 @@ export default function Page() {
               label={"장소 편집"}
             />
           </div>
+        </MenuSection>
+        <MenuSection title={"총 소요시간이 어떻게 되나요?"}>
+          <OptionSelectButtonSection
+            type={"duration"}
+            selected={selectedDuration}
+            onSelect={setSelectedDuration}
+          />
+        </MenuSection>
+        <MenuSection title={"총 소요금액이 어떻게 되나요?"}>
+          <OptionSelectButtonSection
+            type={"cost"}
+            selected={selectedCost}
+            onSelect={setSelectedCost}
+          />
         </MenuSection>
       </div>
     </HeaderLayout>
