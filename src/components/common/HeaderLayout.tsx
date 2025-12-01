@@ -23,7 +23,7 @@ export default function HeaderLayout({ title, children }: HeaderLayoutProps) {
                     <ArrowLeft className="z-10" />
                 </button>
                 {/* 가운데 제목 */}
-                <p className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold">
+                <p className="absolute left-1/2 -translate-x-1/2 text-base font-semibold">
                     {title}
                 </p>
             </div>
