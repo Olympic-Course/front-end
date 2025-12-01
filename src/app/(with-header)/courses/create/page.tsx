@@ -9,8 +9,11 @@ import OptionSelectButtonSection from "@/components/course/OptionSelectButtonSec
 import TagSelectSection from "@/components/common/TagSelectSection";
 import { Lock, LockOpen } from "lucide-react";
 import KakaoMap from "@/components/map/KakaoMap";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
   const [secretMode, setsecretMode] = useState(false);
   const [memoActive, setMemoActive] = useState(false);
 
@@ -87,7 +90,7 @@ export default function Page() {
 
           <div className="flex w-full gap-3 mt-2">
             <SecondaryButton
-              onClick={() => { }}
+              onClick={() => router.push("/courses/create/setting")}
               label={"장소 추가"}
             />
             <SecondaryButton
