@@ -1,5 +1,6 @@
 import { TextAlignJustify, X } from "lucide-react";
 import CourseLocationMemo from "./CourseLocationMemo";
+import EditCourseLocationMemo from "./EditCourseLocationMemo";
 
 interface EditCourseLocationItemProps {
     stepOrder: number;
@@ -29,11 +30,8 @@ export default function EditCourseLocationItem({ stepOrder, name, onClick }: Edi
                 </div>
                 <TextAlignJustify color="#828282" size={20} />
             </div>
-            {/* {memoActive && (
-                <CourseLocationMemo
-                    locationMemo={"춥거나 더울때는 소마미술관으로 대피🚨"}
-                />
-            )} */}
+
+            <EditCourseLocationMemo/>
         </div>
     );
 }
