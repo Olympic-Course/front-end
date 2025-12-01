@@ -1,6 +1,7 @@
 import HeaderLayout from "@/components/common/HeaderLayout";
 import MenuSection from "@/components/common/MenuSection";
 import EditCourseLocationItem from "@/components/course/EditCourseLocationItem";
+import EditCourseSection from "@/components/course/EditCourseSection";
 import SelectedLocationItem from "@/components/course/SelectedLocationItem";
 
 export default function Page() {
@@ -11,7 +12,7 @@ export default function Page() {
                     <SelectedLocationItem locationIcon={"/icons/CONVENIENCE.svg"} name={"포메인"} />
                 </MenuSection>
                 <MenuSection title={"추가된 장소"}>
-                    <EditCourseLocationItem stepOrder={1} name={"세계평화의문"} />
+                    <EditCourseSection/>
                 </MenuSection>
             </div>
         </HeaderLayout>
