@@ -4,7 +4,7 @@ import CourseLocationMemo from "./CourseLocationMemo";
 interface CourseLocationItemProps {
     stepOrder: number;
     name: string;
-    memoActive: boolean;
+    memoActive?: boolean;
     onClick?: () => void;
 }
 
@@ -28,12 +28,6 @@ export default function CourseLocationItem({ stepOrder, name, memoActive, onClic
                     : <ChevronRight size={25} color="#828282" strokeWidth={1} />
                 }
             </button>
-            
-            {memoActive && (
-                <CourseLocationMemo
-                    locationMemo={"춥거나 더울때는 소마미술관으로 대피🚨"}
-                />
-            )}
         </div>
     );
 }

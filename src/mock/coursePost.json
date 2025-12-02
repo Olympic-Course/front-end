@@ -1,0 +1,78 @@
+{
+    "courseId": 2,
+    "title": "한성백제역 근처를 듀벅뜌벅",
+    "writer": "나는 아름다운 나비",
+    "secret": false,
+    "tag": [
+        "혼자",
+        "추움",
+        "뚜벅이"
+    ],
+    "comment": "한성백제역 근처에는... 어쩌구\r\n화장실 근처에 고양이가 살아욤 😺\r\n어쩌구 그래서 좋았어요..",
+
+    "steps": [
+        {
+            "stepId": 1,
+            "stepOrder": 1,
+            "name": "세계평화의문",
+            "latitude": 12.809,
+            "longitude": 123.123,
+            "description": "세계평화의문 근처에 포메인 맛집임👍🏻",
+            "photos": [
+                {
+                    "path": "",
+                    "isRep": true
+                }
+            ]
+        },
+        {
+            "stepId": 2,
+            "stepOrder": 2,
+            "name": "포메인",
+            "latitude": 22.032,
+            "longitude": 127.132,
+            "description": null,
+            "photos": []
+        },
+        {
+            "stepId": 3,
+            "stepOrder": 3,
+            "name": "수변무대",
+            "latitude": 24.032,
+            "longitude": 129.132,
+            "description": "음쏘굿",
+            "photos": []
+        },
+        {
+            "stepId": 4,
+            "stepOrder": 4,
+            "name": "소마미술관",
+            "latitude": 32.032,
+            "longitude": 129.132,
+            "description": "춥거나 더울때는 소마미술관으로 대피🚨",
+            "photos": [
+                {
+                    "path": "",
+                    "isRep": false
+                },
+                {
+                    "path": "",
+                    "isRep": false
+                }
+            ]
+        },
+        {
+            "stepId": 5,
+            "stepOrder": 5,
+            "name": "한성백제박물관",
+            "latitude": 29.032,
+            "longitude": 132.132,
+            "description": null,
+            "photos": []
+        }
+    ],
+    "duration": "MIN_0_30",
+    "cost": "WON_50000_60000",
+    "liked": false,
+    "likeNum": 3
+}
