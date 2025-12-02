@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface HeaderLayoutProps {
-    title: string;
+    title?: string;
     children: React.ReactNode;
 }
 

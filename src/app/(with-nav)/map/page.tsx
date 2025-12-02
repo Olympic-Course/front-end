@@ -1,7 +1,14 @@
+import KakaoMap from "@/components/map/KakaoMap";
+import MapFilter from "@/components/map/MapFilter";
+
 export default function Page() {
+
   return (
-    <h1 className="text-3xl font-bold">
-      지도 페이지
-    </h1>
+    <div className="h-screen relative">
+      <div className="w-full h-full">
+        <KakaoMap />
+      </div>
+      <MapFilter />
+    </div>
   )
 }
