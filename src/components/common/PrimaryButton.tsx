@@ -1,5 +1,5 @@
 interface PrimaryButtonProps {
-    onClick: () => void;
+    onClick?: () => void;
     label: string;
 }
 
