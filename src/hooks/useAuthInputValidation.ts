@@ -65,9 +65,11 @@ export default function useAuthInputValidation() {
         }
 
         if (value.trim() === "") {
-            type === "email"
-                ? setEmailError("내용을 입력해주세요.")
-                : setNicknameError("내용을 입력해주세요.");
+            if (type === "email") {
+                setEmailError("내용을 입력해주세요.");
+            } else {
+                setNicknameError("내용을 입력해주세요.");
+            }
             return false;
         }
 
@@ -94,10 +96,10 @@ export default function useAuthInputValidation() {
                 }
                 return false;
             }
-        } catch (error: any) {
-            const status = error?.response?.status;
+        } catch (error: unknown) {
+            const axiosError = error as { response?: { status?: number } };
 
-            if (status === 409) {
+            if (axiosError.response?.status === 409) {
                 if (type === "email") {
                     setEmailError("이미 사용 중인 이메일입니다.");
                     setEmailChecked(false);
