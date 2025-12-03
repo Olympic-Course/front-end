@@ -2,7 +2,7 @@ import { checkDuplicate, CheckDuplicateRequest } from "@/api/user";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-export default function useSignupValidation() {
+export default function useAuthInputValidation() {
     // 에러 메시지
     const [emailError, setEmailError] = useState("");
     const [nicknameError, setNicknameError] = useState("");
