@@ -11,6 +11,7 @@ import AccountDeleteModal from "@/components/user/modal/AccountDeleteModal";
 import LogoutConfirmModal from "@/components/user/modal/LogoutConfirmModal";
 import AccountEditModal from "@/components/user/modal/AccountEditModal";
 import UserCourseButton from "@/components/user/UserCourseButtom";
+import { useLogout } from "@/hooks/useLogout";
 
 export default function Page() {
   const router = useRouter();
@@ -18,6 +19,16 @@ export default function Page() {
   const [showAccountDeleteModal, setShowAccountDeleteModal] = useState(false);
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
   const [showAccountEditModal, setShowAccountEditModal] = useState(false);
+
+  const { mutate: logoutMutate } = useLogout();
+
+  function handleLogout() {
+    logoutMutate(undefined, {
+      onSuccess: () => {
+        router.push("/");
+      },
+    });
+  }
 
   return (
     <div className="flex flex-col h-full px-10 py-6 justify-center items-center gap-5">
@@ -100,6 +111,7 @@ export default function Page() {
           title="로그아웃"
           buttonLabel="로그아웃"
           onClose={() => setShowLogoutConfirmModal(false)}
+          buttonClick={handleLogout}
         >
           <LogoutConfirmModal />
         </Modal>

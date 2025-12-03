@@ -1,4 +1,5 @@
-import { checkDuplicate, CheckDuplicateRequest } from "@/api/user";
+import { checkDuplicate } from "@/api/user";
+import { CheckDuplicateRequest } from "@/types/user"
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
