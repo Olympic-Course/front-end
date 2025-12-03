@@ -23,20 +23,22 @@ export default function Page() {
       </h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-        <AuthInput
-          label="이메일"
-          type="text"
-          value={email}
-          placeholder="이메일을 입력하세요"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <AuthInput
-          label="비밀번호"
-          type="password"
-          value={password}
-          placeholder="비밀번호를 입력하세요"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="flex flex-col">
+          <AuthInput
+            label="이메일"
+            type="text"
+            value={email}
+            placeholder="이메일을 입력하세요"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <AuthInput
+            label="비밀번호"
+            type="password"
+            value={password}
+            placeholder="비밀번호를 입력하세요"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
         <div className="flex justify-evenly">
           <LinkButton href="/guest_laguage_select" label="비회원으로 즐기기" />

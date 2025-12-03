@@ -14,7 +14,7 @@ export default function AccountEditModal() {
                 label={"닉네임"}
                 type={"text"}
                 placeholder="사용하실 닉네임을 입력해주세요"
-                rightAddon
+                checkDuplicate
             />
         </div>
     );

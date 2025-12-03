@@ -1,5 +1,5 @@
 interface InputCheckButtonProps {
-    onClick: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     label?: string;
 }
@@ -8,9 +8,14 @@ export default function InputCheckButton({ onClick, disabled = false, label = "ì
     return (
         <button
             type="button"
-            //onClick={onClick}
+            onClick={onClick}
             disabled={disabled}
-            className="text-xs font-medium px-3.5 py-2 rounded-md bg-(--color-navActive) text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="
+                text-xs font-medium px-3.5 py-2 rounded-md 
+                bg-(--color-navActive) text-white
+                disabled:bg-gray-300 
+                disabled:cursor-not-allowed
+            "
         >
             {label}
         </button>
