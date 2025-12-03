@@ -3,21 +3,77 @@
 import AuthInput from "@/components/user/AuthInput"
 import PrimaryButton from "@/components/common/PrimaryButton"
 import LanguageSelector from "@/components/user/LanguageSelector";
+import useAuthInputValidation from "@/hooks/useAuthInputValidation";
 import { useState } from "react";
+import { useSignup } from "@/hooks/useSignup";
+import Modal from "@/components/common/Modal";
+import { useRouter } from 'next/navigation';
+import ModalText from "@/components/common/ModalText";
 
 export default function Page() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [language, setLanguage] = useState("ko");
+  // const [language, setLanguage] = useState("ko");
 
+  const [showResultModal, setShowResultModal] = useState(false);
 
-  function handleSubmit(e?: React.FormEvent) {
+  const signupMutation = useSignup();
+
+  const {
+    // 에러 메시지
+    emailError,
+    nicknameError,
+    passwordError,
+    passwordCheckError,
+
+    // 성공 메시지
+    emailSuccess,
+    nicknameSuccess,
+
+    // 중복 체크 여부
+    emailChecked,
+    nicknameChecked,
+
+    // actions
+    validate,
+    clearFieldError,
+    clearFieldSuccess,
+    resetDuplicateStatus,
+    checkDuplicateField,
+  } = useAuthInputValidation();
+
+  async function handleSignup(e?: React.FormEvent) {
     if (e) e.preventDefault();
 
-    // 실제 회원가입 요청 처리
-    console.log("회원가입 요청:", { email, nickname, password, language });
+    const isValid = validate({
+      email,
+      nickname,
+      password,
+      passwordCheck,
+    });
+
+    if (!isValid) return;
+
+    try {
+      const response = await signupMutation.mutateAsync({
+        email,
+        nickname,
+        password,
+      });
+
+      if (response.success) {
+        setShowResultModal(true);
+      } else {
+        console.log("회원가입 실패: ", response.code);
+      }
+
+    } catch (error) {
+      console.error("회원가입 API 오류:", error);
+    }
   }
 
   return (
@@ -26,15 +82,24 @@ export default function Page() {
         회원가입
       </h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <form onSubmit={handleSignup} className="flex flex-col gap-3">
         <AuthInput
           label="이메일"
           type="text"
           value={email}
           placeholder="이메일을 입력하세요"
           required
-          rightAddon
-          onChange={(e) => setEmail(e.target.value)}
+          checkDuplicate
+          onChange={(e) => {
+            setEmail(e.target.value);
+            clearFieldError("email");
+            clearFieldSuccess("email");
+            resetDuplicateStatus("email");
+          }}
+          onDuplicateCheck={() => checkDuplicateField("email", email)}
+          errorMessage={emailError}
+          successMessage={emailSuccess}
+          isDuplicateChecked={emailChecked}
         />
         <AuthInput
           label="닉네임"
@@ -42,8 +107,17 @@ export default function Page() {
           value={nickname}
           placeholder="닉네임을 입력하세요"
           required
-          rightAddon
-          onChange={(e) => setNickname(e.target.value)}
+          checkDuplicate
+          onChange={(e) => {
+            setNickname(e.target.value);
+            clearFieldError("nickname");
+            clearFieldSuccess("nickname");
+            resetDuplicateStatus("nickname");
+          }}
+          onDuplicateCheck={() => checkDuplicateField("nickname", nickname)}
+          errorMessage={nicknameError}
+          successMessage={nicknameSuccess}
+          isDuplicateChecked={nicknameChecked}
         />
         <AuthInput
           label="비밀번호"
@@ -51,7 +125,11 @@ export default function Page() {
           value={password}
           placeholder="비밀번호를 입력하세요"
           required
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            clearFieldError("password");
+          }}
+          errorMessage={passwordError}
         />
         <AuthInput
           label="비밀번호 확인"
@@ -59,21 +137,38 @@ export default function Page() {
           value={passwordCheck}
           placeholder="비밀번호를 다시 입력하세요"
           required
-          onChange={(e) => setPasswordCheck(e.target.value)}
+          onChange={(e) => {
+            setPasswordCheck(e.target.value);
+            clearFieldError("passwordCheck");
+          }}
+          errorMessage={passwordCheckError}
         />
 
-        <LanguageSelector
+        {/* 언어 선택 영역은 추후 구현 예정 */}
+        {/* <LanguageSelector
           selectedLanguage={language}
           onChangeLanguage={setLanguage}
-        />
+        /> */}
 
         <div className="flex justify-center mt-2">
           <PrimaryButton
             label="회원가입"
-            onClick={handleSubmit}
+            onClick={handleSignup}
           />
         </div>
       </form>
+
+      {/* 회원가입 성공 모달 표시 */}
+      {showResultModal && (
+        <Modal
+          title="회원가입 성공"
+          buttonLabel="로그인 하러가기"
+          onClose={() => router.push("/")}
+          buttonClick={() => router.push("/")}
+        >
+          <ModalText text={"회원가입이 완료되었습니다."} />
+        </Modal>
+      )}
     </div>
   );
 }
