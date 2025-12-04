@@ -75,16 +75,18 @@ export default function Page() {
       </form>
 
       {/* 로그인 실패 시 모달 표시 */}
-            {showErrorModal && (
-              <Modal
-                title="로그인 실패"
-                buttonLabel="확인"
-                onClose={() => setShowErrorModal(false)}
-                buttonClick={() => setShowErrorModal(false)}
-              >
-                <ModalText text={"로그인 정보를 다시 확인해주세요."} />
-              </Modal>
-            )}
+      {showErrorModal && (
+        <Modal
+          title="로그인 실패"
+          onClose={() => setShowErrorModal(false)}
+        >
+          <ModalText
+            text={"로그인 정보를 다시 확인해주세요."}
+            buttonLabel="확인"
+            buttonClick={() => setShowErrorModal(false)}
+          />
+        </Modal>
+      )}
     </div>
   )
 }
