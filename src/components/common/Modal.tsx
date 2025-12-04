@@ -1,15 +1,13 @@
 import { X } from "lucide-react";
-import PrimaryButton from "./PrimaryButton";
 
 interface ModalProps {
     onClose: () => void;
     title: string;
     children: React.ReactNode;
-    buttonLabel: string;
-    buttonClick?: () => void;
+    
 }
 
-export default function Modal({ onClose, title, children, buttonLabel, buttonClick }: ModalProps) {
+export default function Modal({ onClose, title, children }: ModalProps) {
     return (
         <div
             className="w-full fixed inset-0 bg-black/50 flex justify-center items-center z-20"
@@ -35,12 +33,6 @@ export default function Modal({ onClose, title, children, buttonLabel, buttonCli
                 <div className="w-full flex-1 min-h-0 overflow-y-auto">
                     {children}
                 </div>
-
-                {/* 모달 버튼 */}
-                <PrimaryButton
-                    onClick={buttonClick}
-                    label={buttonLabel}
-                />
             </div>
         </div>
     );

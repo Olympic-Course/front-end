@@ -9,7 +9,9 @@ interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     errorMessage?: string; //에러메세지
     type: string;
     onDuplicateCheck?: () => void;
+    onCurrentPasswordCheck?: () => void;
     isDuplicateChecked?: boolean;
+    isCurrentPasswordChecked?: boolean;
 }
 
 export default function AuthInput({
@@ -21,7 +23,9 @@ export default function AuthInput({
     errorMessage,
     className,
     onDuplicateCheck,
+    onCurrentPasswordCheck,
     isDuplicateChecked,
+    isCurrentPasswordChecked,
     ...props
 }: AuthInputProps) {
 
@@ -51,9 +55,8 @@ export default function AuthInput({
                 {passWordCheck && (
                     <div className="absolute right-2 top-1/2 -translate-y-1/2">
                         <InputCheckButton
-                            onClick={function (): void {
-                                throw new Error("Function not implemented.");
-                            }}
+                            onClick={onCurrentPasswordCheck}
+                            disabled={isCurrentPasswordChecked}
                             label="확인"
                         />
                     </div>

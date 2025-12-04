@@ -3,9 +3,9 @@
 import AuthInput from "@/components/user/AuthInput"
 import PrimaryButton from "@/components/common/PrimaryButton"
 import LanguageSelector from "@/components/user/LanguageSelector";
-import useAuthInputValidation from "@/hooks/useAuthInputValidation";
+import useAuthInputValidation from "@/hooks/user/useAuthInputValidation";
 import { useState } from "react";
-import { useSignup } from "@/hooks/useSignup";
+import { useSignup } from "@/hooks/auth/useSignup";
 import Modal from "@/components/common/Modal";
 import { useRouter } from 'next/navigation';
 import ModalText from "@/components/common/ModalText";
@@ -39,7 +39,7 @@ export default function Page() {
     nicknameChecked,
 
     // actions
-    validate,
+    validateSignup,
     clearFieldError,
     clearFieldSuccess,
     resetDuplicateStatus,
@@ -49,7 +49,7 @@ export default function Page() {
   async function handleSignup(e?: React.FormEvent) {
     if (e) e.preventDefault();
 
-    const isValid = validate({
+    const isValid = validateSignup({
       email,
       nickname,
       password,
@@ -162,11 +162,13 @@ export default function Page() {
       {showResultModal && (
         <Modal
           title="회원가입 성공"
-          buttonLabel="로그인 하러가기"
           onClose={() => router.push("/")}
-          buttonClick={() => router.push("/")}
         >
-          <ModalText text={"회원가입이 완료되었습니다."} />
+          <ModalText
+            text={"회원가입이 완료되었습니다."}
+            buttonClick={() => router.push("/")}
+            buttonLabel="로그인 하러가기"
+          />
         </Modal>
       )}
     </div>

@@ -3,12 +3,15 @@
 import { useRef, useState } from "react";
 import CourseLocationItem from "../CourseLocationItem";
 import { Step } from "@/types/course";
+import PrimaryButton from "@/components/common/PrimaryButton";
 
 interface CourseMemoModalProps {
     courseSteps: Step[];
+    buttonLabel: string;
+    buttonClick: () => void;
 }
 
-export default function CourseMemoModal({ courseSteps }: CourseMemoModalProps) {
+export default function CourseMemoModal({ courseSteps, buttonLabel, buttonClick }: CourseMemoModalProps) {
     const [memoActiveList, setMemoActiveList] = useState<boolean[]>(
         Array(courseSteps.length).fill(false)
     );
@@ -52,6 +55,11 @@ export default function CourseMemoModal({ courseSteps }: CourseMemoModalProps) {
                     )}
                 </div>
             ))}
+            {/* 모달 버튼 */}
+            <PrimaryButton
+                onClick={buttonClick}
+                label={buttonLabel}
+            />
         </div>
     );
 }
