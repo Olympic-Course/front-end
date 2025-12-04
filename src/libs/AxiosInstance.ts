@@ -11,6 +11,11 @@ api.interceptors.request.use(
         // 요청 보내기 직전에 실행됨
         if (typeof window !== "undefined") {
             const token = localStorage.getItem("accessToken");
+
+            if (config.url?.includes("/api/auth/reissue")) {
+                return config;
+            }
+
             if (token && config.headers) {
                 config.headers.Authorization = `Bearer ${token}`
             }
@@ -29,26 +34,35 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
+        // 401이면서 이미 retry하지 않은 경우
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
+
             try {
+
+                // reissue 호출 (Authorization 헤더 없이)
                 const res = await api.post("/api/auth/reissue");
 
-                const newAccessToken = res.headers["authorization"];
+                const rawToken = res.headers["authorization"];
+                const newToken = rawToken?.replace("Bearer ", "").trim();
 
-                if (newAccessToken) {
-                    localStorage.setItem("accessToken", newAccessToken);
+                if (newToken) {
+                    localStorage.setItem("accessToken", newToken);
                 }
 
-                originalRequest.headers.Authorization = newAccessToken;
+                // 기존 요청의 Authorization 덮어쓰기
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
+                // 기존 요청 다시 실행
                 return api(originalRequest);
+
             } catch (refreshError) {
-                console.error("리프레시 토큰 만료됨 → 로그아웃 처리 필요");
+                console.error("리프레시 토큰 만료됨 → 로그아웃 필요");
                 localStorage.removeItem("accessToken");
                 return Promise.reject(refreshError);
             }
         }
+
         return Promise.reject(error);
     }
 );

@@ -4,11 +4,24 @@ import CourseLocationMemo from "./CourseLocationMemo";
 interface CourseSectionProps {
     stepOrder: number;
     name: string;
-    memoActive?: boolean;
-    onClick?: () => void;
+    memoActive: boolean;
+    description: string;
+    photos: string[];
+    thumbnail: string | null;
+    onSelectThumbnail: (photoUrl: string) => void;
+    onClick: () => void;
 }
 
-export default function CourseSection({ stepOrder, name, memoActive, onClick }: CourseSectionProps) {
+export default function CourseSection({
+    stepOrder,
+    name,
+    memoActive,
+    description,
+    photos,
+    thumbnail,
+    onSelectThumbnail,
+    onClick
+}: CourseSectionProps) {
     return (
         <div className="flex flex-col w-full gap-1">
             <CourseLocationItem
@@ -19,7 +32,10 @@ export default function CourseSection({ stepOrder, name, memoActive, onClick }: 
             />
             {memoActive && (
                 <CourseLocationMemo
-                    locationMemo={"춥거나 더울때는 소마미술관으로 대피🚨"}
+                    locationMemo={description}
+                    photos={photos}
+                    thumbnail={thumbnail}
+                    onSelectThumbnail={onSelectThumbnail}
                 />
             )}
         </div>

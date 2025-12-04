@@ -3,12 +3,27 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { CircleX, Plus } from "lucide-react";
+import { usePresignedUrl } from "@/hooks/course/usePresignedUrl";
 
-export default function EditCourseLocationMemo() {
-    const [images, setImages] = useState<string[]>([]); // 이미지 URL 배열
+interface EditCourseLocationMemoProps {
+    description: string;
+    photos: string[];
+    onChangeDescription: (value: string) => void;
+    onAddPhoto: (fileName: string) => void;
+    onRemovePhoto: (photoIndex: number) => void;
+}
 
+export default function EditCourseLocationMemo({
+    description,
+    photos,
+    onChangeDescription,
+    onAddPhoto,
+    onRemovePhoto
+}: EditCourseLocationMemoProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const { mutateAsync: getPresigned } = usePresignedUrl();
 
     // textarea 자동 높이 조절
     const handleResizeHeight = () => {
@@ -23,19 +38,54 @@ export default function EditCourseLocationMemo() {
         fileInputRef.current?.click();
     };
 
+    const uploadToS3 = async (uploadUrl: string, file: File) => {
+        await fetch(uploadUrl, {
+            method: "PUT",
+            body: file,
+            headers: {
+                "Content-Type": file.type,
+            }
+        });
+    };
+
     // 파일 선택 후 이미지 추가
-    const handleAddImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAddImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        const previewURL = URL.createObjectURL(file);
-        setImages((prev) => [...prev, previewURL]);
+        const ext = file.name.split(".").pop() || "png";
+
+        try {
+            // 1) Presigned URL 요청
+            const { url, fileName } = await getPresigned(ext);
+
+            // 2) S3 업로드
+            await uploadToS3(url, file);
+
+            // 3) 저장된 fileName 부모에게 전달
+            onAddPhoto(fileName);
+
+        } catch (error) {
+            console.error("이미지 업로드 실패", error);
+        }
     };
 
     // 이미지 삭제
-    const handleRemoveImage = (index: number) => {
-        setImages((prev) => prev.filter((_, i) => i !== index));
-    };
+    {
+        photos.map((img, index) => (
+            <div key={index} className="relative w-28 h-32 rounded-xl overflow-hidden shrink-0">
+                <Image src={img} alt="photo" fill className="object-cover" />
+
+                <button
+                    onClick={() => onRemovePhoto(index)}
+                    className="absolute top-1 right-1"
+                >
+                    <CircleX size={18} fill="#FF5252" color="#FFFFFF" />
+                </button>
+            </div>
+        ))
+    }
+
 
     return (
         <div className="flex flex-col w-full p-3 gap-2 bg-[#F7F7F7] rounded-xl justify-start">
@@ -45,27 +95,27 @@ export default function EditCourseLocationMemo() {
                 rows={1}
                 className="text-gray-700 whitespace-pre-line leading-relaxed w-full bg-[#F7F7F7] focus:outline-none text-sm font-medium placeholder:text-gray-300 placeholder:font-medium resize-none"
                 placeholder="메모를 입력하세요"
+                value={description}
+                onChange={(e) => {
+                    onChangeDescription(e.target.value);
+                    handleResizeHeight();
+                }}
             />
             <div className="flex gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none">
                 {/* 이미지 렌더링 */}
-                {images.map((img, index) => (
+                {photos.map((img, index) => (
                     <div key={index} className="relative w-28 h-32 rounded-xl overflow-hidden shrink-0">
-                        <Image
-                            src={img}
-                            alt="preview"
-                            fill
-                            className="object-cover"
-                        />
+                        <Image src={img} alt="photo" fill className="object-cover" />
 
-                        {/* 삭제 버튼 */}
                         <button
-                            onClick={() => handleRemoveImage(index)}
+                            onClick={() => onRemovePhoto(index)}
                             className="absolute top-1 right-1"
                         >
                             <CircleX size={18} fill="#FF5252" color="#FFFFFF" />
                         </button>
                     </div>
                 ))}
+
 
                 {/* + 버튼 박스 */}
                 <div

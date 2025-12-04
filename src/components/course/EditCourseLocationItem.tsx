@@ -1,12 +1,20 @@
-import { TextAlignJustify, X } from "lucide-react";
+import { ChevronDown, ChevronUp, TextAlignJustify, X } from "lucide-react";
 
 interface EditCourseLocationItemProps {
     stepOrder: number;
     name: string;
-    onClick?: () => void;
+    onDelete?: () => void;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
 }
 
-export default function EditCourseLocationItem({ stepOrder, name, onClick }: EditCourseLocationItemProps) {
+export default function EditCourseLocationItem({
+    stepOrder,
+    name,
+    onDelete,
+    onMoveUp,
+    onMoveDown,
+}: EditCourseLocationItemProps) {
     return (
         <div className="flex w-full justify-between items-center gap-3">
             <div
@@ -20,12 +28,19 @@ export default function EditCourseLocationItem({ stepOrder, name, onClick }: Edi
                     {name}
                 </span>
                 <button
-                    onClick={onClick}
+                    onClick={onDelete}
                 >
                     <X color="#FF383C" size={20} />
                 </button>
             </div>
-            <TextAlignJustify color="#828282" size={20} />
+            <div className="flex flex-col gap-1">
+                <button disabled={!onMoveUp} onClick={onMoveUp}>
+                    <ChevronUp size={18} color={onMoveUp ? "#000" : "#CCC"} />
+                </button>
+                <button disabled={!onMoveDown} onClick={onMoveDown}>
+                    <ChevronDown size={18} color={onMoveDown ? "#000" : "#CCC"} />
+                </button>
+            </div>
         </div>
     );
 }

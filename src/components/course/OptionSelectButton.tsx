@@ -1,5 +1,8 @@
 interface OptionSelectButtonProps {
-    option: string;
+    option: {
+        label: string;
+        key: string;
+    };
     active: boolean;
     onClick?: () => void;
 }
@@ -16,7 +19,7 @@ export default function OptionSelectButton({ option, active, onClick }: OptionSe
                 }
             `}
         >
-            {option}
+            {option.label}
         </button>
     );
 }
