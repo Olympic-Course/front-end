@@ -1,5 +1,4 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
-import CourseLocationMemo from "./CourseLocationMemo";
 
 interface CourseLocationItemProps {
     stepOrder: number;

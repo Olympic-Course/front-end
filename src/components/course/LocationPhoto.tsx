@@ -1,20 +1,25 @@
 "use client"
 
-import { useState } from "react";
 import Image from "next/image";
 import ThumbnailSelectButton from "./ThumbnailSelectButton";
 
-export default function LocationPhoto() {
-    const [thumbnailActive, setThumbnailActive] = useState(false);
+interface LocationPhotoProps {
+    photoUrl: string;            // 이미지 URL
+    thumbnailActive: boolean;    // 대표 여부
+    onClickThumbnail: () => void; 
+}
 
-    // const displayThumbnail =
-    //     thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
+export default function LocationPhoto({
+    photoUrl,
+    thumbnailActive,
+    onClickThumbnail
+}: LocationPhotoProps) {
 
     return (
         <div className="flex flex-col items-end gap-1">
             <div className="w-28 h-32 border border-[#E1E1E1] rounded-lg overflow-hidden bg-gray-100">
                 <Image
-                    src="/img/OlCo_logo_3.png"
+                    src={photoUrl}
                     alt="thumbnail"
                     width={112}
                     height={128}
@@ -23,7 +28,7 @@ export default function LocationPhoto() {
             </div>
             <ThumbnailSelectButton
                 thumbnailActive={thumbnailActive}
-                onClick={() => setThumbnailActive(prev => !prev)}
+                onClick={onClickThumbnail}
             />
         </div>
     );

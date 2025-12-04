@@ -44,19 +44,75 @@ export interface CourseDetail extends Course {
   cost: string;
 }
 
-// export enum DurationEnum {
-//   MIN_0_30 = "MIN_0_30",
-//   MIN_30_60 = "MIN_30_60",
-//   MIN_60_120 = "MIN_60_120",
-//   MIN_120_PLUS = "MIN_120_PLUS",
-// }
+// 코스별 사진 요청 API
+export interface CoursePhoto {
+  path: string;
+  isRep: boolean;
+}
 
-// export enum CostEnum {
-//   WON_0_10000 = "WON_0_10000",
-//   WON_10000_20000 = "WON_10000_20000",
-//   WON_20000_30000 = "WON_20000_30000",
-//   WON_30000_40000 = "WON_30000_40000",
-//   WON_40000_50000 = "WON_40000_50000",
-//   WON_50000_60000 = "WON_50000_60000",
-//   WON_60000_PLUS = "WON_60000_PLUS",
-// }
+// 코스 장소 스텝 요청 API
+export interface CourseStepRequest {
+  stepOrder: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  description: string | null;
+  photos: CoursePhoto[];
+}
+
+// 전체 코스 요청 API
+export interface CreateCourseRequest {
+  title: string;
+  secret: boolean;
+  tag: string[];       // enum key 배열 (예: ["ALONE", "COLD"])
+  comment: string;
+  steps: CourseStepRequest[];
+  duration: string;    // enum key
+  cost: string;        // enum key
+}
+
+
+// 코스 사진 응답 API
+export interface CoursePhotoResponse {
+  photoId: number;
+  path: string;
+  isRep: boolean;
+}
+
+// 코스 장소 스텝 응답 API
+export interface CourseStepResponse {
+  stepId: number;
+  stepOrder: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  descriptionKo: string | null;
+  photos: CoursePhotoResponse[];
+}
+
+// 전체 코스 응답 API
+export interface CreateCourseResponse {
+  success: boolean;
+  code: string;
+  data: {
+    courseId: number;
+    title: string;
+    writer: string;
+    secret: boolean;
+    tag: string[];
+    comment: string;
+    steps: CourseStepResponse[];
+    duration: string;
+    cost: string;
+  };
+}
+
+// presignedUrl 발급 요청 API
+export interface PresignedUrlResponse {
+  success: boolean;
+  code: string;
+  data: {
+    url: string;
+    fileName: string;
+  };
+}

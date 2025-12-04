@@ -1,6 +1,6 @@
 import OptionSelectButton from "./OptionSelectButton";
-import { durationOptions } from "@/constants/durationOptions";
-import { costOptions } from "@/constants/costOptions";
+import { DurationOptions } from "@/constants/durationOptions";
+import { CostOptions } from "@/constants/costOptions";
 
 interface OptionSelectButtonSectionProps {
     type: "duration" | "cost";
@@ -9,16 +9,16 @@ interface OptionSelectButtonSectionProps {
 }
 
 export default function OptionSelectButtonSection({ type, selected, onSelect }: OptionSelectButtonSectionProps) {
-    const options = type === "duration" ? durationOptions : costOptions;
+    const options = type === "duration" ? DurationOptions : CostOptions;
 
     return (
         <div className="grid grid-cols-2 w-full gap-1.5 mt-1.5">
-            {options.map((option, idx) => (
+            {options.map((option) => (
                 <OptionSelectButton
-                    key={idx}
+                    key={option.key}
                     option={option}
-                    active={selected === option}
-                    onClick={() => onSelect(option)}
+                    active={selected === option.key}     // key 비교
+                    onClick={() => onSelect(option.key)} // key 넘김
                 />
             ))}
         </div>

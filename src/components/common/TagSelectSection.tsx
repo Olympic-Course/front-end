@@ -3,16 +3,23 @@
 import { useState } from "react";
 import TagButton from "./TagButton";
 import { Tags } from "@/constants/tags"
+import { useCourseCreateStore } from "@/store/courseCreateStore"
 
 export default function TagSelectSection() {
+    const { tags, toggleTag } = useCourseCreateStore();
+
     const [activeTags, setActiveTags] = useState<string[]>([]);
 
+    // const handleTagClick = (tagKey: string) => {
+    //     setActiveTags((prev) =>
+    //         prev.includes(tagKey)
+    //             ? prev.filter((t) => t !== tagKey)
+    //             : [...prev, tagKey]
+    //     );
+    // };
+
     const handleTagClick = (tagKey: string) => {
-        setActiveTags((prev) =>
-            prev.includes(tagKey)
-                ? prev.filter((t) => t !== tagKey)
-                : [...prev, tagKey]
-        );
+        toggleTag(tagKey);
     };
 
     return (
@@ -21,7 +28,7 @@ export default function TagSelectSection() {
                 <TagButton
                     key={tag.key}
                     label={tag.label}
-                    active={activeTags.includes(tag.key)}
+                    active={tags.includes(tag.key)}
                     onClick={() => handleTagClick(tag.key)}
                 />
             ))}
