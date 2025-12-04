@@ -6,7 +6,7 @@ import { SignupRequest, LoginRequest, LoginData } from "@/types/auth"
 // 회원가입 API
 export type SignupResponse = ApiResponse<null>;
 
-export async function signup(data: SignupRequest) {
+export async function signup(data: SignupRequest): Promise<SignupResponse> {
   const res = await api.post<SignupResponse>("/api/users", data);
   return res.data;
 }

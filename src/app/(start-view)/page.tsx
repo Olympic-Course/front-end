@@ -4,7 +4,7 @@ import AuthInput from "@/components/user/AuthInput"
 import PrimaryButton from "@/components/common/PrimaryButton"
 import LinkButton from "@/components/user/LinkButton";
 import { useState } from "react";
-import { useLogin } from "@/hooks/useLogin"
+import { useLogin } from "@/hooks/auth/useLogin"
 import { useRouter } from 'next/navigation';
 import Modal from "@/components/common/Modal";
 import ModalText from "@/components/common/ModalText";
