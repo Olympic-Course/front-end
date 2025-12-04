@@ -99,11 +99,13 @@ export default function Page() {
       {showCourseMemoModal && (
         <Modal
           title="장소별 메모 작성"
-          buttonLabel="코스 시작하기"
           onClose={() => setShowCourseMemoModal(false)}
-          buttonClick={() => router.push(`/map/navigation/${courseData.courseId}`)}
         >
-          <CourseMemoModal courseSteps={courseData.steps} />
+          <CourseMemoModal
+            courseSteps={courseData.steps}
+            buttonLabel="코스 시작하기"
+            buttonClick={() => router.push(`/map/navigation/${courseData.courseId}`)}
+          />
         </Modal>
       )}
     </HeaderLayout>
