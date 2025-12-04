@@ -28,10 +28,10 @@ export default function Page() {
                     <div className="flex-1 w-full overflow-y-auto px-5 pb-5 flex flex-col gap-5">
                         <MenuSection title={"듀?님이 걷고있는 코스"}>
                             <div className="flex flex-col gap-2 my-2 w-full">
-                                <CourseSection stepOrder={1} name={"팔각정2"} />
+                                {/* <CourseSection stepOrder={1} name={"팔각정2"} />
                                 <CourseSection stepOrder={2} name={"팔각정3"} />
                                 <CourseSection stepOrder={3} name={"팔각정4"} />
-                                <CourseSection stepOrder={4} name={"팔각정5"} />
+                                <CourseSection stepOrder={4} name={"팔각정5"} /> */}
                             </div>
                         </MenuSection>
                         <PrimaryButton 

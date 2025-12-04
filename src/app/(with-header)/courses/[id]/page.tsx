@@ -84,8 +84,9 @@ export default function Page() {
               stepOrder={step.stepOrder}
               name={step.name}
               memoActive={memoActiveList[index]}
-              onClick={() => toggleMemoActive(index)}
-            />
+              onClick={() => toggleMemoActive(index)} description={""} photos={[]} thumbnail={null} onSelectThumbnail={function (photoUrl: string): void {
+                throw new Error("Function not implemented.");
+              } }            />
           ))}
         </div>
 
