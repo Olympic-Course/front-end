@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { Map, MapMarker, useKakaoLoader, CustomOverlayMap } from "react-kakao-maps-sdk";
