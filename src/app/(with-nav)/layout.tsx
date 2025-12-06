@@ -1,3 +1,5 @@
+"use client"
+
 import '../globals.css';
 import Image from 'next/image';
 import logoImage from "/public/img/OlCo_logo_2.png";
