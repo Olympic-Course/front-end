@@ -1,7 +1,7 @@
 export const Tags = [
     { label: "혼자", key: "ALONE" },
     { label: "친구와", key: "WITH_FRIEND" },
-    { label: "연인과", key: " WITH_LOVER" },
+    { label: "연인과", key: "WITH_LOVER" },
     { label: "배우자와", key: "WITH_SPOUSE" },
     { label: "아이와", key: "WITH_CHILD" },
     { label: "부모님과", key: "WITH_PARENTS" },
