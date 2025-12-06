@@ -15,7 +15,7 @@ export default function useCourseListGet(tags: string[] = [], keyword?: string) 
     queryKey: ["courseList", { tags, keyword }],
     queryFn: ({ pageParam = null }) =>
       getCourseList({
-        tag: tags,
+        tags: tags,
         keyword,
         cursor: pageParam,
       }),

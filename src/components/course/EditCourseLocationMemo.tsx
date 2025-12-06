@@ -23,6 +23,8 @@ export default function EditCourseLocationMemo({
     const fileInputRef = useRef<HTMLInputElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+    const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net";
+
     const { mutateAsync: getPresigned } = usePresignedUrl();
 
     // textarea 자동 높이 조절
@@ -62,8 +64,9 @@ export default function EditCourseLocationMemo({
             // 2) S3 업로드
             await uploadToS3(url, file);
 
-            // 3) 저장된 fileName 부모에게 전달
-            onAddPhoto(fileName);
+            // 3) CloudFront URL 조립 후 부모에게 전달
+            const fullImageUrl = `${CLOUD_FRONT}/${fileName}`;
+            onAddPhoto(fullImageUrl);
 
         } catch (error) {
             console.error("이미지 업로드 실패", error);

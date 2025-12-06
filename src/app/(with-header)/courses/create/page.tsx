@@ -10,7 +10,7 @@ import CreateKakaoMap from "@/components/map/CreateKakaoMap";
 import { useRouter } from "next/navigation";
 import { useCourseCreateStore } from "@/store/courseCreateStore";
 import CourseSection from "@/components/course/CourseSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCourseCreate } from "@/hooks/course/useCourseCreate";
 import ModalText from "@/components/common/ModalText";
 import Modal from "@/components/common/Modal";
@@ -37,6 +37,16 @@ export default function Page() {
     setCost,
     clearAll,
   } = useCourseCreateStore();
+
+  useEffect(() => {
+    if (thumbnail) return;
+    if (steps.length === 0) return;
+
+    const firstStepWithPhoto = steps.find(step => step.photos.length > 0);
+    if (!firstStepWithPhoto) return;
+
+    setThumbnail(firstStepWithPhoto.photos[0]);
+  }, [steps, thumbnail, setThumbnail]);
 
   const [showResultModal, setShowResultModal] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>(tags);
@@ -210,7 +220,7 @@ export default function Page() {
       {showResultModal && (
         <Modal
           title="코스 작성 완료"
-          onClose={() => router.push("/course")}
+          onClose={() => router.push("/courses")}
         >
           <ModalText
             text={"코스가 성공적으로 작성되었습니다."}

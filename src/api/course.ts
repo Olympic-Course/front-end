@@ -22,17 +22,17 @@ export async function getPresignedUrl(
 
 // 코스 리스트 조회 API
 interface CourseListParams {
-    tag?: string[];
+    tags?: string[];
     keyword?: string;
     cursor?: number | null;
 }
 
 export async function getCourseList(params: CourseListParams): Promise<GetCourseListResponse> {
-    const { tag, keyword, cursor } = params;
+    const { tags, keyword, cursor } = params;
 
     const res = await api.get<GetCourseListResponse>("/api/courses", {
         params: {
-            ...(tag && tag.length > 0 ? { tag } : {}),   // ← tag 배열이 비어있으면 제외
+            ...(tags && tags.length > 0 ? { tags } : {}),   // ← tag 배열이 비어있으면 제외
             ...(keyword ? { keyword } : {}),             // keyword 없으면 제외
             ...(cursor !== null ? { cursor } : {}),      // cursor NULL 이면 제외
         },
