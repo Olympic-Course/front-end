@@ -55,7 +55,7 @@ export default function CoursesClient() {
     const params = new URLSearchParams();
 
     if (keyword.trim() !== "") params.set("keyword", keyword.trim());
-    tags.forEach(tag => params.append("tag", tag));
+    tags.forEach(tags => params.append("tags", tags));
 
     router.push(`/courses?${params.toString()}`);
   }
