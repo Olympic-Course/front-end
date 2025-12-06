@@ -1,3 +1,5 @@
+"use client";
+
 import HeaderLayout from "@/components/common/HeaderLayout";
 import SearchBar from "@/components/common/SearchBar";
 import TagSelectSection from "@/components/common/TagSelectSection";
