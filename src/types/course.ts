@@ -39,7 +39,7 @@ export interface CourseDetail extends Course {
   secret: boolean;
   tag: string[];
   comment: string;
-  steps: Step[];
+  steps: StepDetail[];
   duration: string;
   cost: string;
 }
