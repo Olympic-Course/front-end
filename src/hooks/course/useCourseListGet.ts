@@ -9,7 +9,7 @@ export default function useCourseListGet(tags: string[] = [], keyword?: string) 
     GetCourseListResponse,     // queryFn 반환 타입 (각 페이지)
     Error,                     // error 타입
     InfiniteData<GetCourseListResponse>,     // 최종 select 반환 타입 (pages 구조 유지)
-    any[],    // queryKey 타입
+    [string, { tags: string[]; keyword?: string }],    // queryKey 타입
     number | null              // pageParam 타입
   >({
     queryKey: ["courseList", { tags, keyword }],
