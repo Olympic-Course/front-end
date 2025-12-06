@@ -5,21 +5,28 @@ import TagButton from "./TagButton";
 import { Tags } from "@/constants/tags"
 import { useCourseCreateStore } from "@/store/courseCreateStore"
 
-export default function TagSelectSection() {
-    const { tags, toggleTag } = useCourseCreateStore();
+interface TagSelectSectionProps {
+    selectedTags?: string[];
+    onChangeTags: (tags: string[]) => void;
+}
 
-    const [activeTags, setActiveTags] = useState<string[]>([]);
+export default function TagSelectSection({
+    selectedTags= [],
+    onChangeTags,
+}: TagSelectSectionProps) {
 
     // const handleTagClick = (tagKey: string) => {
-    //     setActiveTags((prev) =>
-    //         prev.includes(tagKey)
-    //             ? prev.filter((t) => t !== tagKey)
-    //             : [...prev, tagKey]
-    //     );
+    //     toggleTag(tagKey);
     // };
 
     const handleTagClick = (tagKey: string) => {
-        toggleTag(tagKey);
+        if (selectedTags.includes(tagKey)) {
+            // 선택 해제
+            onChangeTags(selectedTags.filter(t => t !== tagKey));
+        } else {
+            // 선택 추가
+            onChangeTags([...selectedTags, tagKey]);
+        }
     };
 
     return (
@@ -28,7 +35,7 @@ export default function TagSelectSection() {
                 <TagButton
                     key={tag.key}
                     label={tag.label}
-                    active={tags.includes(tag.key)}
+                    active={selectedTags.includes(tag.key)}
                     onClick={() => handleTagClick(tag.key)}
                 />
             ))}

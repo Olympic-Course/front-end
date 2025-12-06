@@ -32,12 +32,14 @@ export default function Page() {
     setDescription,
     toggleSecretMode,
     setThumbnail,
+    setTags,
     setDuration,
     setCost,
     clearAll,
   } = useCourseCreateStore();
 
   const [showResultModal, setShowResultModal] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>(tags);
   const [createdCourseId, setCreatedCourseId] = useState<number | null>(null);
   const [memoActiveList, setMemoActiveList] = useState<boolean[]>(
     steps.map(() => false)
@@ -126,7 +128,13 @@ export default function Page() {
           />
         </MenuSection>
         <MenuSection title={"어떤 스타일의 코스를 즐기셨나요?"}>
-          <TagSelectSection />
+          <TagSelectSection
+            selectedTags={selectedTags}
+            onChangeTags={(newTags) => {
+              setSelectedTags(newTags);
+              setTags(newTags);
+            }}
+          />
         </MenuSection>
         <MenuSection title={"코스 소개"}>
           <textarea

@@ -2,7 +2,7 @@
 
 export interface Course {
   courseId: number;
-  thumbnail?: string;
+  thumbnail: string;
   title: string;
   writer: string;
   likeNum: number;
@@ -39,7 +39,7 @@ export interface CourseDetail extends Course {
   secret: boolean;
   tag: string[];
   comment: string;
-  steps: Step[];
+  steps: StepDetail[];
   duration: string;
   cost: string;
 }
@@ -115,4 +115,19 @@ export interface PresignedUrlResponse {
     url: string;
     fileName: string;
   };
+}
+
+// 코스리스트 조회 API 응답 타입
+export interface CourseListResponse {
+  bestCourses: Course[];
+  courses: Course[];
+  nextCursor: number;
+  isLast: boolean;
+}
+
+// API 전체 Response
+export interface GetCourseListResponse {
+  success: boolean;
+  code: string;
+  data: CourseListResponse;
 }

@@ -1,15 +1,29 @@
+"use client";
+
 import HeaderLayout from "@/components/common/HeaderLayout";
 import SearchBar from "@/components/common/SearchBar";
 import TagSelectSection from "@/components/common/TagSelectSection";
 import UserCourseList from "@/components/user/UserCourseList";
 import userPostedCourseList from "@/mock/userPostedCourseList.json"
+import { useState } from "react";
 
 export default function Page() {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [localKeyword, setLocalKeyword] = useState("");
+  const [keyword, setKeyword] = useState("");
+
   return (
     <HeaderLayout title={"작성 글 리스트"}>
       <div className="flex flex-col h-full px-10 pb-10 justify-start items-center gap-5">
-        <SearchBar />
-        <TagSelectSection />
+        <SearchBar
+          value={localKeyword}
+          onChange={setLocalKeyword}
+          onSubmit={() => setKeyword(localKeyword.trim())}
+        />
+        <TagSelectSection
+          selectedTags={selectedTags}
+          onChangeTags={setSelectedTags}
+        />
         <div className="w-full flex flex-col gap-3">
           {userPostedCourseList.map((course) => (
             <UserCourseList

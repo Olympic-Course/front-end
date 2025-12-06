@@ -1,7 +1,7 @@
 // src/api/course.ts
 import api from "@/libs/AxiosInstance";
-import { ApiResponse } from "@/types/api";
-import type { CreateCourseRequest, CreateCourseResponse, PresignedUrlResponse } from "@/types/course";
+import qs from "qs";
+import type { CreateCourseRequest, CreateCourseResponse, PresignedUrlResponse, GetCourseListResponse } from "@/types/course";
 
 
 // 코스 작성 API
@@ -18,4 +18,31 @@ export async function getPresignedUrl(
         ext,
     });
     return res.data.data;
+}
+
+// 코스 리스트 조회 API
+interface CourseListParams {
+    tag?: string[];
+    keyword?: string;
+    cursor?: number | null;
+}
+
+export async function getCourseList(params: CourseListParams): Promise<GetCourseListResponse> {
+    const { tag, keyword, cursor } = params;
+
+    const res = await api.get<GetCourseListResponse>("/api/courses", {
+        params: {
+            ...(tag && tag.length > 0 ? { tag } : {}),   // ← tag 배열이 비어있으면 제외
+            ...(keyword ? { keyword } : {}),             // keyword 없으면 제외
+            ...(cursor !== null ? { cursor } : {}),      // cursor NULL 이면 제외
+        },
+        paramsSerializer: {
+            serialize: (params) =>
+                qs.stringify(params, { arrayFormat: "repeat" }),
+            // tag=A&tag=B&tag=C 형태로 변환
+            // arrayFormat: "comma" => tag=A,B,C
+        },
+    });
+
+    return res.data;
 }
