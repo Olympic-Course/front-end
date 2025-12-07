@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import LikeIcon from "../common/LikeIcon";
+import { useLike } from "@/hooks/course/useLike";
 
 interface BestCourseCardProps {
     courseId: number;
@@ -12,6 +13,8 @@ interface BestCourseCardProps {
 }
 
 export default function BestCourseCard({ courseId, thumbnail, title, writer, liked, likeNum }: BestCourseCardProps) {
+    const { useLiked, useLikeNum, toggle } = useLike(courseId, liked, likeNum);
+    
     const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net/";
 
     const displayThumbnail =
@@ -42,7 +45,7 @@ export default function BestCourseCard({ courseId, thumbnail, title, writer, lik
                 </div>
 
                 {/* 좋아요 영역 */}
-                <LikeIcon liked={liked} count={likeNum} />
+                <LikeIcon liked={useLiked} count={useLikeNum} onClick={toggle} />
             </div>
         </div>
     );
