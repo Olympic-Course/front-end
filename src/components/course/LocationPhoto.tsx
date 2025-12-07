@@ -17,11 +17,16 @@ export default function LocationPhoto({
     onClickThumbnail
 }: LocationPhotoProps) {
 
+    const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net/";
+
+    // fileName → CloudFront URL 변환
+    const fullImageUrl = `${CLOUD_FRONT}${photoUrl}`;
+
     return (
         <div className="flex flex-col items-end gap-1">
             <div className="w-28 h-32 border border-[#E1E1E1] rounded-lg overflow-hidden bg-gray-100">
                 <Image
-                    src={photoUrl}
+                    src={fullImageUrl}
                     alt="thumbnail"
                     width={112}
                     height={128}

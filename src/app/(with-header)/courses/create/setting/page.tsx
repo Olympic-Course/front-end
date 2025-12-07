@@ -21,7 +21,7 @@ export default function Page() {
         longitude: number;
     } | null>(null);
 
-    const { steps, setSteps  } = useCourseCreateStore();
+    const { steps, setSteps, thumbnail, setThumbnail } = useCourseCreateStore();
 
     const [tempSteps, setTempSteps] = useState<
         {
@@ -30,6 +30,7 @@ export default function Page() {
             longitude: number;
             description: string;
             photos: string[];
+            previewPhotos: string[];
         }[]
     >([]);
 
@@ -42,6 +43,7 @@ export default function Page() {
                     longitude: s.longitude,
                     description: s.description,
                     photos: s.photos ?? [],
+                    previewPhotos: s.previewPhotos ?? [],
                 }))
             );
         }
@@ -58,6 +60,7 @@ export default function Page() {
                 longitude: selectedLocation.longitude,
                 description: "",
                 photos: [],
+                previewPhotos: [],
             },
         ]);
     };
@@ -94,6 +97,7 @@ export default function Page() {
             longitude: s.longitude,
             description: s.description,
             photos: s.photos,
+            previewPhotos: s.previewPhotos,
         }));
 
         setSteps(nextSteps);
@@ -101,20 +105,30 @@ export default function Page() {
     };
 
 
+    const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net";
+
     const handleAddPhoto = (index: number, fileName: string) => {
         setTempSteps(prev => {
             const arr = [...prev];
-            arr[index].photos.push(fileName);
+            arr[index].photos.push(fileName);                      // fileName 저장
+            arr[index].previewPhotos.push(`${CLOUD_FRONT}/${fileName}`);  // 미리보기 저장
             return arr;
         });
     };
 
     const handleRemovePhoto = (index: number, photoIndex: number) => {
+        const removedFileName = tempSteps[index].photos[photoIndex];
+
         setTempSteps(prev => {
             const arr = [...prev];
             arr[index].photos = arr[index].photos.filter((_, i) => i !== photoIndex);
+            arr[index].previewPhotos = arr[index].previewPhotos.filter((_, i) => i !== photoIndex);
             return arr;
         });
+
+        if (thumbnail === removedFileName) {
+            setThumbnail(null);
+        }
     };
 
 
@@ -162,6 +176,7 @@ export default function Page() {
                                         onMoveDown={idx < tempSteps.length - 1 ? () => moveStep(idx, idx + 1) : undefined}
                                         description={step.description}
                                         photos={step.photos}
+                                        previewPhotos={step.previewPhotos}
                                         onChangeDescription={(value) => handleUpdateDescription(idx, value)}
                                         onAddPhoto={(fileName) => handleAddPhoto(idx, fileName)}
                                         onRemovePhoto={(photoIndex) => handleRemovePhoto(idx, photoIndex)}

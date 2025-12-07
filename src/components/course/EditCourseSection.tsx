@@ -6,11 +6,12 @@ interface EditCourseSectionProps {
     name: string;
     description: string;
     photos: string[];
+    previewPhotos: string[];
     onChangeDescription: (value: string) => void;
     onDelete: () => void;
     onMoveUp?: () => void;
     onMoveDown?: () => void;
-    onAddPhoto: (fileName: string) => void;
+    onAddPhoto: (fileName: string, fullUrl: string) => void;
     onRemovePhoto: (photoIndex: number) => void;
 }
 
@@ -19,6 +20,7 @@ export default function EditCourseSection({
     name,
     description,
     photos,
+    previewPhotos,
     onChangeDescription,
     onDelete,
     onMoveUp,
@@ -38,6 +40,7 @@ export default function EditCourseSection({
             <EditCourseLocationMemo
                 description={description}
                 photos={photos}
+                previewPhotos={previewPhotos}
                 onChangeDescription={onChangeDescription}
                 onAddPhoto={onAddPhoto}
                 onRemovePhoto={onRemovePhoto}

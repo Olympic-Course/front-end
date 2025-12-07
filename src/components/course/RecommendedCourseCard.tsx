@@ -4,8 +4,12 @@ import LikeIcon from "../common/LikeIcon";
 import { Course } from "@/types/course";
 
 export default function RecommendedCourseCard({ courseId, thumbnail, title, writer, liked, likeNum }: Course) {
+    const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net/";
+
     const displayThumbnail =
-        thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
+        thumbnail && thumbnail.trim() !== ""
+            ? `${CLOUD_FRONT}${thumbnail}`
+            : "/img/OlCo_logo_3.png";
 
     return (
         <div className="flex flex-col w-full flex-1 min-w-0">

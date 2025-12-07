@@ -12,6 +12,7 @@ export interface CourseStep {
   longitude: number;
   description: string;
   photos: string[];
+  previewPhotos: string[];
 }
 
 interface CourseCreateState {

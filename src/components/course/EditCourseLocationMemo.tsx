@@ -8,14 +8,16 @@ import { usePresignedUrl } from "@/hooks/course/usePresignedUrl";
 interface EditCourseLocationMemoProps {
     description: string;
     photos: string[];
+    previewPhotos: string[];
     onChangeDescription: (value: string) => void;
-    onAddPhoto: (fileName: string) => void;
+    onAddPhoto: (fileName: string, fullUrl: string) => void;
     onRemovePhoto: (photoIndex: number) => void;
 }
 
 export default function EditCourseLocationMemo({
     description,
     photos,
+    previewPhotos,
     onChangeDescription,
     onAddPhoto,
     onRemovePhoto
@@ -66,7 +68,8 @@ export default function EditCourseLocationMemo({
 
             // 3) CloudFront URL 조립 후 부모에게 전달
             const fullImageUrl = `${CLOUD_FRONT}/${fileName}`;
-            onAddPhoto(fullImageUrl);
+            onAddPhoto(fileName, fullImageUrl);
+
 
         } catch (error) {
             console.error("이미지 업로드 실패", error);
@@ -106,7 +109,7 @@ export default function EditCourseLocationMemo({
             />
             <div className="flex gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none">
                 {/* 이미지 렌더링 */}
-                {photos.map((img, index) => (
+                {previewPhotos.map((img, index) => (
                     <div key={index} className="relative w-28 h-32 rounded-xl overflow-hidden shrink-0">
                         <Image src={img} alt="photo" fill className="object-cover" />
 
