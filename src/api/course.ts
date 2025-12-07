@@ -58,3 +58,9 @@ export async function getCourseDetail(courseId: number): Promise<GetCourseDetail
   const res = await api.get<GetCourseDetailResponse>(`/api/courses/${courseId}`);
   return res.data;
 }
+
+// 코스 좋아요 등록 및 해제 API
+export async function toggleLike(courseId: number) {
+  const res = await api.post(`/api/courses/${courseId}/like`);
+  return res.data.data;
+}

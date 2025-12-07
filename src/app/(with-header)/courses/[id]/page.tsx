@@ -19,6 +19,7 @@ import { DurationOptions } from "@/constants/durationOptions";
 import { CostOptions } from "@/constants/costOptions";
 import { Tags } from "@/constants/tags";
 import { useParams } from "next/navigation";
+import { useLike } from "@/hooks/course/useLike";
 
 export default function Page() {
   const router = useRouter();
@@ -46,6 +47,17 @@ export default function Page() {
       setMemoActiveList(Array(courseData.steps.length).fill(false));
     }
   }, [courseData]);
+
+  // 1) useLike를 안전하게 호출할 준비
+  const safeLiked = courseData?.liked ?? false;
+  const safeLikeNum = courseData?.likeNum ?? 0;
+
+  // 2) useLike는 컴포넌트 최상단에서 항상 실행되게 해야 함
+  const { useLiked, useLikeNum, toggle } = useLike(
+    courseId,
+    safeLiked,
+    safeLikeNum
+  );
 
 
   if (isLoading || !courseData) {
@@ -92,7 +104,7 @@ export default function Page() {
         {/* 코스 타이틀 및 좋아요 버튼 영역 */}
         <div className="w-full flex justify-between items-start gap-3">
           <h1 className="text-xl font-bold">{courseData.title}</h1>
-          <LikeIcon liked={courseData.liked} count={courseData.likeNum} />
+          <LikeIcon liked={useLiked} count={useLikeNum} onClick={toggle} />
         </div>
 
         {/* 태그 영역 */}

@@ -3,12 +3,13 @@ import { Heart } from "lucide-react";
 interface LikeIconProps {
     liked: boolean; 
     count: number;
+    onClick?: () => void;
 }
 
-export default function LikeIcon({ liked, count }: LikeIconProps){
+export default function LikeIcon({ liked, count, onClick }: LikeIconProps){
     return(
         <div className="flex flex-col items-center">
-            <button>
+            <button onClick={onClick}>
                 <Heart
                     className="w-5 h-5"
                     fill={liked ? "#FF5252" : "none"}
