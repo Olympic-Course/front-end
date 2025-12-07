@@ -1,7 +1,13 @@
 // src/api/course.ts
 import api from "@/libs/AxiosInstance";
 import qs from "qs";
-import type { CreateCourseRequest, CreateCourseResponse, PresignedUrlResponse, GetCourseListResponse } from "@/types/course";
+import type {
+    CreateCourseRequest,
+    CreateCourseResponse,
+    PresignedUrlResponse,
+    GetCourseListResponse,
+    GetCourseDetailResponse,
+} from "@/types/course";
 
 
 // 코스 작성 API
@@ -45,4 +51,10 @@ export async function getCourseList(params: CourseListParams): Promise<GetCourse
     });
 
     return res.data;
+}
+
+// 코스 상세조회 API
+export async function getCourseDetail(courseId: number): Promise<GetCourseDetailResponse> {
+  const res = await api.get<GetCourseDetailResponse>(`/api/courses/${courseId}`);
+  return res.data;
 }

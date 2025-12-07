@@ -21,6 +21,10 @@ export interface Photo {
   isRep: boolean;
 }
 
+export interface PhotoDetail extends Photo {
+  photoId: number;
+}
+
 export interface Step {
   stepId: number;
   stepOrder: number;
@@ -30,13 +34,14 @@ export interface Step {
 export interface StepDetail extends Step {
   latitude: number;
   longitude: number;
-  description: string | null;
-  photos: Photo[];
+  descriptionKo: string | null;
+  photos: PhotoDetail[];
 }
 
 // 기존 Course 타입을 확장해서 상세 타입 생성
 export interface CourseDetail extends Course {
   secret: boolean;
+  isAuthor: boolean;
   tag: string[];
   comment: string;
   steps: StepDetail[];
@@ -130,4 +135,11 @@ export interface GetCourseListResponse {
   success: boolean;
   code: string;
   data: CourseListResponse;
+}
+
+// 코스 상세 조회 API 응답 타입
+export interface GetCourseDetailResponse {
+  success: boolean;
+  code: string;
+  data: CourseDetail;
 }
