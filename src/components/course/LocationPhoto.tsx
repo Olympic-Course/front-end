@@ -4,12 +4,14 @@ import Image from "next/image";
 import ThumbnailSelectButton from "./ThumbnailSelectButton";
 
 interface LocationPhotoProps {
+    type: "create" | "detail";
     photoUrl: string;            // 이미지 URL
     thumbnailActive: boolean;    // 대표 여부
-    onClickThumbnail: () => void; 
+    onClickThumbnail: () => void;
 }
 
 export default function LocationPhoto({
+    type,
     photoUrl,
     thumbnailActive,
     onClickThumbnail
@@ -27,6 +29,7 @@ export default function LocationPhoto({
                 />
             </div>
             <ThumbnailSelectButton
+                type={type}
                 thumbnailActive={thumbnailActive}
                 onClick={onClickThumbnail}
             />

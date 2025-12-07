@@ -6,7 +6,7 @@ import SecondaryButton from "@/components/common/SecondaryButton";
 import OptionSelectButtonSection from "@/components/course/OptionSelectButtonSection";
 import TagSelectSection from "@/components/common/TagSelectSection";
 import { Lock, LockOpen } from "lucide-react";
-import CreateKakaoMap from "@/components/map/CreateKakaoMap";
+import ViewCourseKakaoMap from "@/components/map/ViewCourseKakaoMap";
 import { useRouter } from "next/navigation";
 import { useCourseCreateStore } from "@/store/courseCreateStore";
 import CourseSection from "@/components/course/CourseSection";
@@ -158,7 +158,7 @@ export default function Page() {
         <MenuSection title={"코스 설정"}>
           {/* 지도 영역 */}
           <div className="w-full h-60">
-            <CreateKakaoMap Steps={steps} />
+            <ViewCourseKakaoMap Steps={steps} />
           </div>
 
           {/* 코스 스텝 */}
@@ -175,6 +175,7 @@ export default function Page() {
               {steps.map((step, idx) => (
                 <CourseSection
                   key={step.stepOrder}
+                  type={"create"}
                   stepOrder={step.stepOrder}
                   name={step.name}
                   memoActive={memoActiveList[idx]}
@@ -183,7 +184,7 @@ export default function Page() {
                   photos={step.photos}
                   thumbnail={thumbnail}
                   onSelectThumbnail={handleSelectThumbnail}
-                />
+                  />
               ))}
             </div>
           )}

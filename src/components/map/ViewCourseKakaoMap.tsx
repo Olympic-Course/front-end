@@ -13,7 +13,7 @@ interface CreateKakaoMapMapProps {
     }[];
 }
 
-export default function CreateKakaoMap({ Steps = [] }: CreateKakaoMapMapProps) {
+export default function ViewCourseKakaoMap({ Steps = [] }: CreateKakaoMapMapProps) {
     const [loading] = useKakaoLoader({
         appkey: process.env.NEXT_PUBLIC_KAKAO_API_KEY!,
         libraries: ["clusterer", "drawing", "services"],
