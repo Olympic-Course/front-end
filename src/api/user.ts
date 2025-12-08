@@ -1,7 +1,15 @@
 // src/api/user.ts
 import api from "@/libs/AxiosInstance"
 import { ApiResponse } from "@/types/api";
-import { UserData, CheckDuplicateRequest, PasswordCheckRequest, PasswordUpdateRequest, UserUpdateRequest } from "@/types/user"
+import {
+  UserData,
+  CheckDuplicateRequest,
+  PasswordCheckRequest,
+  PasswordUpdateRequest,
+  UserUpdateRequest,
+  UserLikedCourse,
+  GetUserWrittenListResponse,
+} from "@/types/user"
 
 // 중복체크 API
 export type CheckDuplicateResponse = ApiResponse<null>;
@@ -64,4 +72,62 @@ export async function passwordUpdate(
     data
   );
   return res.data;
+}
+
+// 유저가 좋아요한 코스 API
+export async function getUserLikedList(
+  keyword?: string,
+  tags?: string[],
+  cursor?: number | null
+) {
+  const params = new URLSearchParams();
+
+  if (keyword && keyword.trim() !== "") {
+    params.set("keyword", keyword.trim());
+  }
+
+  tags?.forEach((t) => params.append("tags", t));
+
+  if (cursor !== null && cursor !== undefined) {
+    params.set("cursor", String(cursor));
+  }
+
+  const res = await api.get<ApiResponse<{
+    courses: UserLikedCourse[];
+    nextCursor: number | null;
+    isLast: boolean;
+  }>>(`/api/users/me/likes?${params.toString()}`);
+
+  return res.data.data; // data.data 만 반환
+}
+
+
+// 유저 작성글 API
+export async function getUserWrittenList(
+  visibility: string,
+  keyword?: string,
+  tags?: string[],
+  cursor?: number | null
+) {
+  const params = new URLSearchParams();
+
+  params.set("visibility", visibility);
+
+  if (keyword && keyword.trim() !== "") {
+    params.set("keyword", keyword.trim());
+  }
+
+  tags?.forEach((t) => params.append("tags", t));
+
+  if (cursor !== null && cursor !== undefined) {
+    params.set("cursor", String(cursor));
+  }
+
+  const res = await api.get<{
+    success: boolean;
+    code: string;
+    data: GetUserWrittenListResponse;
+  }>(`/api/users/me/courses?${params.toString()}`);
+
+  return res.data.data; // { courses, nextCursor, isLast }
 }
