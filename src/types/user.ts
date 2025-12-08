@@ -32,3 +32,31 @@ export interface PasswordUpdateRequest {
 export interface UserUpdateRequest {
   nickname: string;
 }
+
+// 유저가 좋아요한 코스 타입
+export interface UserLikedCourse {
+  courseId: number;
+  thumbnail: string;
+  title: string;
+  writer: string;
+  tags: string[];
+  likeNum: number;
+  liked: boolean;
+}
+
+export interface UserWrittenCourse {
+  courseId: number;
+  thumbnail: string | null;
+  title: string;
+  writer: string;
+  likeNum: number;
+  liked: boolean;
+  tags: string[];
+}
+
+
+export interface GetUserWrittenListResponse {
+  courses: UserWrittenCourse[];
+  nextCursor: number | null;
+  isLast: boolean;
+}

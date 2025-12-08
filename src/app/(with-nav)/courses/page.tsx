@@ -1,4 +1,4 @@
-// src/app/(with-nav)/courses/page.tsx
+// // src/app/(with-nav)/courses/page.tsx
 import { Suspense } from "react";
 import CoursesClient from "./CoursesClient";
 

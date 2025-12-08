@@ -2,21 +2,29 @@ import LikeIcon from "../common/LikeIcon";
 import Image from "next/image";
 import Tag from "../common/Tag";
 import Link from "next/link";
+import { Tags } from "@/constants/tags";
 
 interface UserCourseListProps {
     courseId: number;
     thumbnail?: string | null;
     title: string;
     writer: string;
-    tag: string[];
+    tags: string[];
     liked: boolean;
     likeNum: number
 }
 
-export default function UserCourseList({ courseId, thumbnail, title, writer, tag, liked, likeNum }: UserCourseListProps) {
+export default function UserCourseList({ courseId, thumbnail, title, writer, tags, liked, likeNum }: UserCourseListProps) {
+
+    // const displayThumbnail =
+    //     thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
+
+    const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net/";
 
     const displayThumbnail =
-        thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
+        thumbnail && thumbnail.trim() !== ""
+            ? `${CLOUD_FRONT}${thumbnail}`
+            : "/img/OlCo_logo_3.png";
 
     return (
         <Link href={`/courses/${courseId}`} className="flex w-full gap-2">
@@ -41,9 +49,12 @@ export default function UserCourseList({ courseId, thumbnail, title, writer, tag
                 <div className="relative w-full">
                     <div className="overflow-x-auto whitespace-nowrap scrollbar-none">
                         <div className="flex gap-1">
-                            {tag.map((item, index) => (
-                                <Tag key={index} label={item} />
-                            ))}
+                            {tags.map((item, index) => {
+                                // key → label 변환
+                                const tagLabel = Tags.find(t => t.key === item)?.label ?? item;
+
+                                return <Tag key={index} label={tagLabel} />;
+                            })}
                         </div>
                     </div>
                     <div className="absolute top-0 right-0 h-full w-8 bg-linear-to-l from-white pointer-events-none" />
