@@ -7,20 +7,34 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import CourseSection from "@/components/course/CourseSection";
 import KakaoMap from "@/components/map/KakaoMap";
 import MapFilter from "@/components/map/MapFilter";
+import { usePlacesGet } from "@/hooks/map/usePlacesGet";
+import { Category } from "@/types/map";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>([
+        // "RESTROOM",
+        // "TRASHCAN",
+        // "FOUNTAIN",
+        // "SMOKING_BOOTH",
+        // "VENDING_MACHINE",
+    ]);
+
+    const { data, isLoading } = usePlacesGet(selectedCategories);
 
     return (
         <HeaderLayout title="코스 따라가기">
             <div className="flex flex-col h-[calc(100vh-64px)] relative">
                 <div className="w-full h-full">
-                    <KakaoMap />
+                    <KakaoMap places={data?.data} isLoading={isLoading} />
                 </div>
-                <MapFilter />
+                <MapFilter
+                    selected={selectedCategories}
+                    onChange={setSelectedCategories}
+                />
                 <BottomModal
                     isOpen={isOpen}
                     onOpenChange={setIsOpen}
@@ -34,9 +48,9 @@ export default function Page() {
                                 <CourseSection stepOrder={4} name={"팔각정5"} /> */}
                             </div>
                         </MenuSection>
-                        <PrimaryButton 
-                        label={"안내 종료"}
-                        onClick={() => router.back()}
+                        <PrimaryButton
+                            label={"안내 종료"}
+                            onClick={() => router.back()}
                         />
                     </div>
                 </BottomModal>
