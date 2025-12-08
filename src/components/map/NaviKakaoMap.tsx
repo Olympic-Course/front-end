@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Map, MapMarker, CustomOverlayMap, useKakaoLoader } from "react-kakao-maps-sdk";
-import { useState } from "react";
+import { Map, MapMarker, CustomOverlayMap, useKakaoLoader, Polyline } from "react-kakao-maps-sdk";
+import { useEffect, useState } from "react";
+import { usePedestrianRoute } from "@/hooks/map/usePedestrianRoute";
 
 interface PlacesData {
     RESTROOM: any[];
@@ -33,6 +34,53 @@ export default function NaviKakaoMap({
 
     const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
 
+    const { routePoints, fetchRoute, setRoutePoints } = usePedestrianRoute();
+
+    const [currentPos, setCurrentPos] = useState<{
+        lat: number;
+        lng: number;
+    } | null>(null);
+
+    useEffect(() => {
+        if (!steps || steps.length < 2) return;
+
+        const loadRoutes = async () => {
+            let all: { lat: number; lng: number }[] = [];
+
+            for (let i = 0; i < steps.length - 1; i++) {
+                const from = steps[i];
+                const to = steps[i + 1];
+
+                const pts = await fetchRoute(from, to);
+                all = [...all, ...pts];
+            }
+
+            setRoutePoints(all);
+        };
+
+        loadRoutes();
+    }, [steps]);
+
+    useEffect(() => {
+        if (typeof window === "undefined" || !navigator.geolocation) return;
+
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setCurrentPos({
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                });
+            },
+            (err) => {
+                console.error("GPS Error:", err);
+            },
+            {
+                enableHighAccuracy: true,
+            }
+        );
+    }, []);
+
+
     if (loading || isLoading) {
         return <div className="w-full h-full bg-gray-100" />;
     }
@@ -53,11 +101,40 @@ export default function NaviKakaoMap({
     return (
         <div className="relative w-full h-full">
             <Map
-                center={{ lat: 37.520041, lng: 127.123153 }}
-                level={5}
+                center={
+                    currentPos ??
+                    (steps[0]
+                        ? { lat: steps[0].latitude, lng: steps[0].longitude }
+                        : { lat: 37.520041, lng: 127.123153 } // steps도 없으면 기본값
+                    )
+                }
+                level={3}
                 className="w-full h-full"
                 onClick={() => setSelectedPlace(null)} // 지도 클릭 시 InfoWindow 닫기
             >
+
+                {/* ⭐ Tmap 보행자 Polyline */}
+                {routePoints.length > 1 && (
+                    <Polyline
+                        path={routePoints}
+                        strokeWeight={5}
+                        strokeColor="#007AFF"
+                        strokeOpacity={0.9}
+                        strokeStyle="solid"
+                    />
+                )}
+
+                {/* ⭐ 현재 위치 마커 */}
+                {currentPos && (
+                    <MapMarker
+                        position={currentPos}
+                        image={{
+                            src: "/icons/current_pos_red.svg",
+                            size: { width: 20, height: 20 },
+                        }}
+                    />
+                )}
+
                 {/* RESTROOM */}
                 {places?.RESTROOM?.map((p) => (
                     <MapMarker
