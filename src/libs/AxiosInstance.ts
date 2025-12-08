@@ -35,33 +35,33 @@ api.interceptors.response.use(
         const originalRequest = error.config;
 
         // 401이면서 이미 retry하지 않은 경우
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // if (error.response?.status === 401 && !originalRequest._retry) {
+        //     originalRequest._retry = true;
 
-            try {
+        //     try {
 
-                // reissue 호출 (Authorization 헤더 없이)
-                const res = await api.post("/api/auth/reissue");
+        //         // reissue 호출 (Authorization 헤더 없이)
+        //         const res = await api.post("/api/auth/reissue");
 
-                const rawToken = res.headers["authorization"];
-                const newToken = rawToken?.replace("Bearer ", "").trim();
+        //         const rawToken = res.headers["authorization"];
+        //         const newToken = rawToken?.replace("Bearer ", "").trim();
 
-                if (newToken) {
-                    localStorage.setItem("accessToken", newToken);
-                }
+        //         if (newToken) {
+        //             localStorage.setItem("accessToken", newToken);
+        //         }
 
-                // 기존 요청의 Authorization 덮어쓰기
-                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        //         // 기존 요청의 Authorization 덮어쓰기
+        //         originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-                // 기존 요청 다시 실행
-                return api(originalRequest);
+        //         // 기존 요청 다시 실행
+        //         return api(originalRequest);
 
-            } catch (refreshError) {
-                console.error("리프레시 토큰 만료됨 → 로그아웃 필요");
-                localStorage.removeItem("accessToken");
-                return Promise.reject(refreshError);
-            }
-        }
+        //     } catch (refreshError) {
+        //         console.error("리프레시 토큰 만료됨 → 로그아웃 필요");
+        //         localStorage.removeItem("accessToken");
+        //         return Promise.reject(refreshError);
+        //     }
+        // }
 
         return Promise.reject(error);
     }

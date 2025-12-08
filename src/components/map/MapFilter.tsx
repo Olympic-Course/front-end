@@ -1,22 +1,37 @@
 'use client';
 
 import { useState } from "react";
-import { Filter } from "@/constants/filter"
+import { FILTER_LIST } from "@/constants/filter"
 import FilterButton from "./FilterButton";
 import FilterSettingButton from "./FilterSettingButton";
+import type { Category } from "@/types/map";
 
-export default function MapFilter() {
-    const [activeFilters, setActiveFilters] = useState<string[]>([]);
+interface MapFilterProps {
+    selected: Category[];
+    onChange: (next: Category[]) => void;
+}
+
+export default function MapFilter({ selected, onChange }: MapFilterProps) {
+    
+    // 선택된 카테고리 토글
+    const toggle = (key: Category) => {
+        if (selected.includes(key)) {
+            onChange(selected.filter((c) => c !== key));
+        } else {
+            onChange([...selected, key]);
+        }
+    };
+
     const [showFilterTags, setShowFilterTags] = useState(true);
     const [pinState, setPinState] = useState<"pinOn" | "pinOff">("pinOn");
 
-    const handleFilterClick = (filterKey: string) => {
-        setActiveFilters((prev) =>
-            prev.includes(filterKey)
-                ? prev.filter((t) => t !== filterKey)
-                : [...prev, filterKey]
-        );
-    };
+    // const handleFilterClick = (filterKey: string) => {
+    //     setActiveFilters((prev) =>
+    //         prev.includes(filterKey)
+    //             ? prev.filter((t) => t !== filterKey)
+    //             : [...prev, filterKey]
+    //     );
+    // };
 
     return (
         <>
@@ -53,12 +68,12 @@ export default function MapFilter() {
                     </div>
 
                     <div className="flex flex-wrap w-full gap-2">
-                        {Filter.map((filter) => (
+                        {FILTER_LIST.map((filter) => (
                             <FilterButton
                                 key={filter.key}
                                 label={filter.label}
-                                active={activeFilters.includes(filter.key)}
-                                onClick={() => handleFilterClick(filter.key)}
+                                active={selected.includes(filter.key)}
+                                onClick={() => toggle(filter.key)}
                             />
                         ))}
                     </div>
