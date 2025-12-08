@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import HeaderLayout from "@/components/common/HeaderLayout";
 import SearchBar from "@/components/common/SearchBar";
