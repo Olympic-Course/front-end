@@ -37,7 +37,7 @@ export default function MapFilter({ selected, onChange }: MapFilterProps) {
         <>
             {/* showFilterTags === false */}
             {!showFilterTags && (
-                <div className="absolute top-3 left-1/12 z-50 bg-white/95 p-3 rounded-2xl shadow flex flex-col gap-1">
+                <div className="absolute top-3 left-1/12 z-10 bg-white/95 p-3 rounded-2xl shadow flex flex-col gap-1">
                     <FilterSettingButton
                         type="filter"
                         onClick={() => setShowFilterTags(true)}
@@ -53,7 +53,7 @@ export default function MapFilter({ selected, onChange }: MapFilterProps) {
 
             {/* showFilterTags === true */}
             {showFilterTags && (
-                <div className="flex absolute top-3 left-1/2 -translate-x-1/2 z-50 w-5/6 items-start gap-5 bg-white/95 p-3 rounded-3xl shadow">
+                <div className="flex absolute top-3 left-1/2 -translate-x-1/2 z-10 w-5/6 items-start gap-5 bg-white/95 p-3 rounded-3xl shadow">
                     <div className="flex flex-col gap-1">
                         <FilterSettingButton
                             type="filter"

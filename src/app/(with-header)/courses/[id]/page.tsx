@@ -20,6 +20,8 @@ import { CostOptions } from "@/constants/costOptions";
 import { Tags } from "@/constants/tags";
 import { useParams } from "next/navigation";
 import { useLike } from "@/hooks/course/useLike";
+import { useUserStore } from "@/store/userStore";
+import { useSessionModalStore } from "@/store/sessionModalStore";
 
 export default function Page() {
   const router = useRouter();
@@ -31,6 +33,17 @@ export default function Page() {
   const [courseData, setCourseData] = useState<CourseDetail | null>(null);
 
   const [showCourseMemoModal, setShowCourseMemoModal] = useState(false);
+
+  const { isLoggedIn } = useUserStore();
+  const { openLoginModal } = useSessionModalStore();
+
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      openLoginModal();
+      return;
+    }
+    setShowCourseMemoModal(true);
+  };
 
   // API data가 들어오면 상태 업데이트
   useEffect(() => {
@@ -162,7 +175,7 @@ export default function Page() {
 
         {/* 코스 시작하기 버튼 */}
         <PrimaryButton
-          onClick={() => setShowCourseMemoModal(true)}
+          onClick={handleClick}
           label={"코스 시작하기"}
         />
       </div>
@@ -176,6 +189,7 @@ export default function Page() {
             courseSteps={courseData.steps}
             buttonLabel="코스 시작하기"
             buttonClick={() => router.push(`/map/navigation/${courseData.courseId}`)}
+            courseId={courseData.courseId}
           />
         </Modal>
       )}

@@ -1,25 +1,31 @@
-"use client"
+"use client";
 
 import { useRef, useState } from "react";
 import CourseLocationItem from "../CourseLocationItem";
-import { Step } from "@/types/course";
 import PrimaryButton from "@/components/common/PrimaryButton";
-import { useCourseMemo } from "@/hooks/course/useCourseMemo";
+import { useUpdateCourseMemo } from "@/hooks/course/useUpdateCourseMemo";
+import { useCourseNavigationStore } from "@/store/courseNavigationStore";
 
-interface CourseMemoModalProps {
-    courseSteps: Step[];
-    buttonLabel: string;
-    buttonClick: () => void;
+interface EditCourseMemoModalProps {
+    courseSteps: {
+        stepId: number;
+        stepOrder: number;
+        name: string;
+        memo: string | null;
+    }[];
     courseId: number;
+    userCourseId: number;
+    onClose: () => void;
 }
 
-export default function CourseMemoModal({ 
-    courseSteps, 
-    buttonLabel, 
-    buttonClick,
-    courseId 
-}: CourseMemoModalProps) {
+export default function EditCourseMemoModal({
+    courseSteps,
+    courseId,
     
+    userCourseId,
+    onClose
+}: EditCourseMemoModalProps) {
+
     const [memoActiveList, setMemoActiveList] = useState<boolean[]>(
         Array(courseSteps.length).fill(false)
     );
@@ -27,11 +33,13 @@ export default function CourseMemoModal({
     const [memoValues, setMemoValues] = useState(
         courseSteps.map(step => ({
             stepId: step.stepId,
-            memo: ""
+            memo: step.memo ?? ""
         }))
     );
 
-    const { mutateAsync: submitMemo } = useCourseMemo(courseId);
+    const { mutateAsync: updateMemo } = useUpdateCourseMemo(courseId, userCourseId);
+
+    const setNavigationData = useCourseNavigationStore(state => state.setNavigationData);
 
     const toggleMemoActive = (index: number) => {
         setMemoActiveList(prev =>
@@ -41,16 +49,13 @@ export default function CourseMemoModal({
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    // textarea 자동 높이 조절
     const handleResizeHeight = () => {
         const textarea = textareaRef.current;
         if (!textarea) return;
-
         textarea.style.height = "auto";
         textarea.style.height = textarea.scrollHeight + "px";
     };
 
-    //메모 값 갱신
     const handleMemoChange = (index: number, value: string) => {
         setMemoValues(prev =>
             prev.map((item, i) =>
@@ -61,11 +66,19 @@ export default function CourseMemoModal({
 
     const handleSubmit = async () => {
         try {
-            await submitMemo({ steps: memoValues });
+            const res = await updateMemo({ steps: memoValues }); // ← 수정 API 호출
 
-            buttonClick(); // navigation 페이지로 이동
+            const { userCourseId, userSteps } = res.data;
+
+            // 🔥 store 업데이트
+            setNavigationData({
+                userCourseId,
+                userSteps,
+            });
+
+            onClose(); // 모달 닫기
         } catch (err) {
-            console.error("코스 메모 저장 실패", err);
+            console.error("메모 수정 실패", err);
         }
     };
 
@@ -93,10 +106,10 @@ export default function CourseMemoModal({
                     )}
                 </div>
             ))}
-            {/* 모달 버튼 */}
+
             <PrimaryButton
                 onClick={handleSubmit}
-                label={buttonLabel}
+                label="수정 완료"
             />
         </div>
     );

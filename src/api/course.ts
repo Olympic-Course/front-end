@@ -7,6 +7,7 @@ import type {
     PresignedUrlResponse,
     GetCourseListResponse,
     GetCourseDetailResponse,
+    CourseMemoRequest,
 } from "@/types/course";
 
 
@@ -63,4 +64,27 @@ export async function getCourseDetail(courseId: number): Promise<GetCourseDetail
 export async function toggleLike(courseId: number) {
   const res = await api.post(`/api/courses/${courseId}/like`);
   return res.data.data;
+}
+
+
+// 코스 메모하기 API
+export async function postCourseMemo(
+  courseId: number,
+  payload: CourseMemoRequest
+) {
+  const res = await api.post(`/api/courses/${courseId}/user-courses`, payload);
+  return res.data;
+}
+
+// 코스 메모 수정하기 API
+export async function updateCourseMemo(
+  courseId: number,
+  userCourseId: number,
+  payload: CourseMemoRequest
+) {
+  const res = await api.put(
+    `/api/courses/${courseId}/user-courses/${userCourseId}`,
+    payload
+  );
+  return res.data;
 }

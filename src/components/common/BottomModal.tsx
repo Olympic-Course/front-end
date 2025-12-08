@@ -53,7 +53,7 @@ export default function BottomModal({ isOpen, children, onOpenChange }: BottomMo
 
     return (
         <div
-            className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50 w-full transition-all duration-300 flex justify-center"
+            className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-full transition-all duration-300 flex justify-center"
         >
             <div
                 className="w-full max-w-[480px] max-h-[50vh] rounded-t-2xl flex flex-col bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.1)]"

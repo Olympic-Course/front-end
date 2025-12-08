@@ -143,3 +143,11 @@ export interface GetCourseDetailResponse {
   code: string;
   data: CourseDetail;
 }
+
+// 코스 메모 API 요청 타입
+export interface CourseMemoRequest {
+  steps: {
+    stepId: number;
+    memo: string;
+  }[];
+}
