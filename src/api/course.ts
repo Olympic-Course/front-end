@@ -2,56 +2,74 @@
 import api from "@/libs/AxiosInstance";
 import qs from "qs";
 import type {
-    CreateCourseRequest,
-    CreateCourseResponse,
-    PresignedUrlResponse,
-    GetCourseListResponse,
-    GetCourseDetailResponse,
-    CourseMemoRequest,
+  CreateCourseRequest,
+  CreateCourseResponse,
+  EditCourseRequest,
+  EditCourseResponse,
+  PresignedUrlResponse,
+  GetCourseListResponse,
+  GetCourseDetailResponse,
+  CourseMemoRequest,
 } from "@/types/course";
+import { ApiResponse } from "@/types/api";
 
 
 // 코스 작성 API
 export async function createCourse(data: CreateCourseRequest): Promise<CreateCourseResponse> {
-    const res = await api.post<CreateCourseResponse>("/api/courses", data);
-    return res.data;
+  const res = await api.post<CreateCourseResponse>("/api/courses", data);
+  return res.data;
+}
+
+// 코스 수정 API
+export async function editCourse(
+  courseId: number,
+  data: EditCourseRequest
+): Promise<EditCourseResponse> {
+  const res = await api.put<EditCourseResponse>(`/api/courses/${courseId}`, data);
+  return res.data;
+}
+
+// 코스 삭제 API
+export async function deleteCourse(courseId: number): Promise<ApiResponse<null>> {
+  const res = await api.delete<ApiResponse<null>>(`/api/courses/${courseId}`);
+  return res.data;
 }
 
 // presignedUrl 발급 API
 export async function getPresignedUrl(
-    ext: string
+  ext: string
 ): Promise<PresignedUrlResponse["data"]> {
-    const res = await api.post<PresignedUrlResponse>("/api/file/presigned", {
-        ext,
-    });
-    return res.data.data;
+  const res = await api.post<PresignedUrlResponse>("/api/file/presigned", {
+    ext,
+  });
+  return res.data.data;
 }
 
 // 코스 리스트 조회 API
 interface CourseListParams {
-    tags?: string[];
-    keyword?: string;
-    cursor?: number | null;
+  tags?: string[];
+  keyword?: string;
+  cursor?: number | null;
 }
 
 export async function getCourseList(params: CourseListParams): Promise<GetCourseListResponse> {
-    const { tags, keyword, cursor } = params;
+  const { tags, keyword, cursor } = params;
 
-    const res = await api.get<GetCourseListResponse>("/api/courses", {
-        params: {
-            ...(tags && tags.length > 0 ? { tags } : {}),   // ← tag 배열이 비어있으면 제외
-            ...(keyword ? { keyword } : {}),             // keyword 없으면 제외
-            ...(cursor !== null ? { cursor } : {}),      // cursor NULL 이면 제외
-        },
-        paramsSerializer: {
-            serialize: (params) =>
-                qs.stringify(params, { arrayFormat: "repeat" }),
-            // tag=A&tag=B&tag=C 형태로 변환
-            // arrayFormat: "comma" => tag=A,B,C
-        },
-    });
+  const res = await api.get<GetCourseListResponse>("/api/courses", {
+    params: {
+      ...(tags && tags.length > 0 ? { tags } : {}),   // ← tag 배열이 비어있으면 제외
+      ...(keyword ? { keyword } : {}),             // keyword 없으면 제외
+      ...(cursor !== null ? { cursor } : {}),      // cursor NULL 이면 제외
+    },
+    paramsSerializer: {
+      serialize: (params) =>
+        qs.stringify(params, { arrayFormat: "repeat" }),
+      // tag=A&tag=B&tag=C 형태로 변환
+      // arrayFormat: "comma" => tag=A,B,C
+    },
+  });
 
-    return res.data;
+  return res.data;
 }
 
 // 코스 상세조회 API

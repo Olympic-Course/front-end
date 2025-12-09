@@ -22,6 +22,9 @@ import { useParams } from "next/navigation";
 import { useLike } from "@/hooks/course/useLike";
 import { useUserStore } from "@/store/userStore";
 import { useSessionModalStore } from "@/store/sessionModalStore";
+import { useCourseDelete } from "@/hooks/course/useCourseDelete";
+import ModalText from "@/components/common/ModalText";
+import { useCourseEditStore } from "@/store/courseEditStore";
 
 export default function Page() {
   const router = useRouter();
@@ -33,9 +36,12 @@ export default function Page() {
   const [courseData, setCourseData] = useState<CourseDetail | null>(null);
 
   const [showCourseMemoModal, setShowCourseMemoModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { isLoggedIn } = useUserStore();
   const { openLoginModal } = useSessionModalStore();
+  const { deleteCourse, isPending } = useCourseDelete();
+  const setEntireCourse = useCourseEditStore((state) => state.setEntireCourse);
 
   const handleClick = () => {
     if (!isLoggedIn) {
@@ -43,6 +49,33 @@ export default function Page() {
       return;
     }
     setShowCourseMemoModal(true);
+  };
+
+  const handleEditClick = () => {
+    if (!courseData) return;
+
+    setEntireCourse({
+      title: courseData.title,
+      description: courseData.comment,
+      thumbnail: courseData.thumbnail,
+      duration: courseData.duration,
+      cost: courseData.cost,
+      secret: courseData.secret,
+      tags: courseData.tag, // 서버에서는 tag로 내려줌
+
+      steps: courseData.steps.map((step) => ({
+        stepOrder: step.stepOrder,
+        name: step.name,
+        latitude: step.latitude,
+        longitude: step.longitude,
+        description: step.descriptionKo || "",
+        photos: step.photos.map((p) => p.path),
+        previewPhotos: step.photos.map((p) => p.path),
+        // 클라우드프론트 경로 필요하면 변환 가능
+      })),
+    });
+
+    router.push(`/courses/edit/${courseId}`);
   };
 
   // API data가 들어오면 상태 업데이트
@@ -109,8 +142,8 @@ export default function Page() {
         {/* 수정 및 삭제 버튼 영역 */}
         {courseData.isAuthor && (
           <div className="flex justify-end gap-3 items-center">
-            <CourseActionButtons type={"edit"} />
-            <CourseActionButtons type={"delete"} />
+            <CourseActionButtons type={"edit"} onClick={handleEditClick} />
+            <CourseActionButtons type={"delete"} onClick={() => setShowDeleteModal(true)} />
           </div>
         )}
 
@@ -190,6 +223,19 @@ export default function Page() {
             buttonLabel="코스 시작하기"
             buttonClick={() => router.push(`/map/navigation/${courseData.courseId}`)}
             courseId={courseData.courseId}
+          />
+        </Modal>
+      )}
+
+      {showDeleteModal && (
+        <Modal
+          title="코스 삭제"
+          onClose={() => setShowDeleteModal(false)}
+        >
+          <ModalText
+            buttonLabel="삭제"
+            buttonClick={() => deleteCourse(courseId)}
+            text={"정말로 삭제하시겠습니까?"}
           />
         </Modal>
       )}
