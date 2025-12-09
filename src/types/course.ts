@@ -65,7 +65,7 @@ export interface CourseStepRequest {
   photos: CoursePhoto[];
 }
 
-// 전체 코스 요청 API
+// 전체 코스 작성 요청 API
 export interface CreateCourseRequest {
   title: string;
   secret: boolean;
@@ -95,7 +95,7 @@ export interface CourseStepResponse {
   photos: CoursePhotoResponse[];
 }
 
-// 전체 코스 응답 API
+// 전체 코스 작성 응답 API
 export interface CreateCourseResponse {
   success: boolean;
   code: string;
@@ -150,4 +150,35 @@ export interface CourseMemoRequest {
     stepId: number;
     memo: string;
   }[];
+}
+
+// 전체 코스 수정 요청 API 타입
+export interface EditCourseRequest {
+  title: string;
+  secret: boolean;
+  tag: string[];       // enum key 배열 (예: ["ALONE", "COLD"])
+  comment: string;
+  steps: CourseStepRequest[];
+  duration: string;    // enum key
+  cost: string;        // enum key
+}
+
+
+// 전체 코스 수정 응답 API 타입
+export interface EditCourseResponse {
+  success: boolean;
+  code: string;
+  data: {
+    courseId: number;
+    title: string;
+    writer: string;
+    secret: boolean;
+    tag: string[];
+    comment: string;
+    steps: CourseStepResponse[];
+    duration: string;
+    cost: string;
+    liked: boolean;
+    likeNum: number;
+  };
 }
