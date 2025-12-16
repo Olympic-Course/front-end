@@ -26,7 +26,7 @@ export default function Page() {
       {
         onSuccess: (res) => {
           console.log("로그인 성공", res);
-          router.push("/home");
+          router.replace("/home");
         },
         onError: () => {
           console.log("로그인 실패");
