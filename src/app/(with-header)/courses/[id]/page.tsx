@@ -165,15 +165,21 @@ export default function Page() {
         {/* 코스 정보 영역 */}
         <div className="flex flex-col gap-0.5 w-full">
           <CourseInfoSummary label={"작성자"} info={courseData.writer} />
-          <CourseInfoSummary
-            label={"소요시간"}
-            info={getDurationLabel(courseData.duration)}
-          />
+          {/* 소요시간: NONE 아닐 때만 */}
+          {courseData.duration !== "NONE" && (
+            <CourseInfoSummary
+              label={"소요시간"}
+              info={getDurationLabel(courseData.duration)}
+            />
+          )}
 
-          <CourseInfoSummary
-            label={"소요금액"}
-            info={getCostLabel(courseData.cost)}
-          />
+          {/* 소요금액: NONE 아닐 때만 */}
+          {courseData.cost !== "NONE" && (
+            <CourseInfoSummary
+              label={"소요금액"}
+              info={getCostLabel(courseData.cost)}
+            />
+          )}
         </div>
 
         {/* 코스 소개 내용 영역 */}
