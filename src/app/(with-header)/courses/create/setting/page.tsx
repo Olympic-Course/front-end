@@ -10,6 +10,7 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import { useRouter } from "next/navigation";
 import CourseSettinKakaoMap from "@/components/map/CourseSettingKakaoMap";
 import { useCourseEditStore } from "@/store/courseEditStore";
+import { useCourseCreateStore } from "@/store/courseCreateStore";
 
 export default function Page() {
     const router = useRouter();
@@ -21,7 +22,7 @@ export default function Page() {
         longitude: number;
     } | null>(null);
 
-    const { steps, setSteps, thumbnail, setThumbnail } = useCourseEditStore();
+    const { steps, setSteps, thumbnail, setThumbnail } = useCourseCreateStore();
 
     const [tempSteps, setTempSteps] = useState<
         {

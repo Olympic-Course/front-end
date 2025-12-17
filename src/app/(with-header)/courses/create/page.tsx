@@ -48,7 +48,9 @@ export default function Page() {
     setThumbnail(firstStepWithPhoto.photos[0]);
   }, [steps, thumbnail, setThumbnail]);
 
-  const [showResultModal, setShowResultModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
   const [selectedTags, setSelectedTags] = useState<string[]>(tags);
   const [createdCourseId, setCreatedCourseId] = useState<number | null>(null);
   const [memoActiveList, setMemoActiveList] = useState<boolean[]>(
@@ -67,6 +69,16 @@ export default function Page() {
 
   async function handlePost(e?: React.FormEvent) {
     if (e) e.preventDefault();
+
+    // 필수값 검증
+    if (
+      !title.trim() ||        // 코스명 없음
+      tags.length === 0 ||    // 태그 없음
+      steps.length === 0      // 코스 스텝 없음
+    ) {
+      setShowValidationModal(true);
+      return; // mutate 실행 막기
+    }
 
     const body = {
       title,
@@ -93,7 +105,7 @@ export default function Page() {
       console.log("코스 업로드 성공:", res);
       setCreatedCourseId(res.data.courseId);
       clearAll();
-      setShowResultModal(true);
+      setShowSuccessModal(true);
     } catch (err) {
       console.error("코스 업로드 실패:", err);
     }
@@ -128,7 +140,7 @@ export default function Page() {
         )}
       </button>
       <div className="flex flex-col h-full px-10 pb-5 justify-start items-center gap-5">
-        <MenuSection title={"코스명을 입력해주세요"}>
+        <MenuSection title={"코스명을 입력해주세요"} required>
           <input
             className="w-full p-3 bg-[#F7F7F7] rounded-xl focus:outline-none text-sm font-medium placeholder:text-gray-300 placeholder:font-medium"
             placeholder="코스명을 입력해주세요"
@@ -137,7 +149,7 @@ export default function Page() {
             type="text"
           />
         </MenuSection>
-        <MenuSection title={"어떤 스타일의 코스를 즐기셨나요?"}>
+        <MenuSection title={"어떤 스타일의 코스를 즐기셨나요?"} required>
           <TagSelectSection
             selectedTags={selectedTags}
             onChangeTags={(newTags) => {
@@ -155,7 +167,7 @@ export default function Page() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </MenuSection>
-        <MenuSection title={"코스 설정"}>
+        <MenuSection title={"코스 설정"} required>
           {/* 지도 영역 */}
           <div className="w-full h-60">
             <ViewCourseKakaoMap Steps={steps} />
@@ -184,7 +196,7 @@ export default function Page() {
                   photos={step.photos}
                   thumbnail={thumbnail}
                   onSelectThumbnail={handleSelectThumbnail}
-                  />
+                />
               ))}
             </div>
           )}
@@ -217,8 +229,8 @@ export default function Page() {
           게시하기
         </button>
       </div>
-      {/* 회원가입 성공 모달 표시 */}
-      {showResultModal && (
+      {/* 코스 작성 성공 모달 표시 */}
+      {showSuccessModal && (
         <Modal
           title="코스 작성 완료"
           onClose={() => router.push("/courses")}
@@ -227,6 +239,20 @@ export default function Page() {
             text={"코스가 성공적으로 작성되었습니다."}
             buttonClick={goToCreatedCourse}
             buttonLabel="코스 보러가기"
+          />
+        </Modal>
+      )}
+
+      {/* 코스 필수 입력 안내 모달 표시 */}
+      {showValidationModal && (
+        <Modal
+          title="코스 작성 확인"
+          onClose={() => setShowValidationModal(false)}
+        >
+          <ModalText
+            text={"코스명, 태그, 코스 설정을 필수로 작성해야\n코스 등록이 가능합니다."}
+            buttonClick={() => setShowValidationModal(false)}
+            buttonLabel="닫기"
           />
         </Modal>
       )}

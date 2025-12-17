@@ -9,7 +9,7 @@ interface ModalTextProps {
 export default function ModalText({ text, buttonClick, buttonLabel }: ModalTextProps) {
     return (
         <div className="flex flex-col gap-5">
-            <span className="flex justify-center w-full text-sm text-gray-500 font-medium">
+            <span className="flex justify-center w-full text-sm text-gray-500 font-medium whitespace-pre-line text-center">
                 {text}
             </span>
             {/* 모달 버튼 */}

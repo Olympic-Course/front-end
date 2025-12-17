@@ -9,7 +9,6 @@ import SelectedLocationItem from "@/components/course/SelectedLocationItem";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { useRouter } from "next/navigation";
 import CourseSettinKakaoMap from "@/components/map/CourseSettingKakaoMap";
-import { useCourseCreateStore } from "@/store/courseCreateStore";
 import { useCourseEditStore } from "@/store/courseEditStore";
 
 export default function Page() {
