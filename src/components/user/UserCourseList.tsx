@@ -3,6 +3,7 @@ import Image from "next/image";
 import Tag from "../common/Tag";
 import Link from "next/link";
 import { Tags } from "@/constants/tags";
+import { useLike } from "@/hooks/course/useLike";
 
 interface UserCourseListProps {
     courseId: number;
@@ -15,9 +16,7 @@ interface UserCourseListProps {
 }
 
 export default function UserCourseList({ courseId, thumbnail, title, writer, tags, liked, likeNum }: UserCourseListProps) {
-
-    // const displayThumbnail =
-    //     thumbnail && thumbnail.trim() !== "" ? thumbnail : "/img/OlCo_logo_3.png";
+    const { useLiked, useLikeNum, toggle } = useLike(courseId, liked, likeNum);
 
     const CLOUD_FRONT = "https://dpv9t0vlhs3c7.cloudfront.net/";
 
@@ -62,7 +61,7 @@ export default function UserCourseList({ courseId, thumbnail, title, writer, tag
 
                 {/* 좋아요 영역 */}
                 <div className="flex justify-end">
-                    <LikeIcon liked={liked} count={likeNum} />
+                    <LikeIcon liked={useLiked} count={useLikeNum} onClick={toggle} />
                 </div>
             </div>
         </Link>
