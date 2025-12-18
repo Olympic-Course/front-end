@@ -29,6 +29,7 @@ export default function Page() {
         // "SMOKING_BOOTH",
         // "VENDING_MACHINE",
     ]);
+    const [pinState, setPinState] = useState<"pinOn" | "pinOff">("pinOn");
 
     const [showCourseMemoModal, setShowCourseMemoModal] = useState(false);
     const { userCourseId, userSteps } = useCourseNavigationStore();
@@ -56,11 +57,15 @@ export default function Page() {
         <HeaderLayout title="코스 따라가기">
             <div className="flex flex-col h-[calc(100vh-64px)] relative">
                 <div className="w-full h-full">
-                    <NaviKakaoMap places={data?.data} isLoading={isLoading} steps={userSteps} />
+                    <NaviKakaoMap places={data?.data} isLoading={isLoading} steps={userSteps} showPins={pinState === "pinOn"} />
                 </div>
                 <MapFilter
                     selected={selectedCategories}
                     onChange={setSelectedCategories}
+                    pinState={pinState}
+                    onPinToggle={() =>
+                        setPinState(prev => (prev === "pinOn" ? "pinOff" : "pinOn"))
+                    }
                 />
                 <BottomModal
                     isOpen={isOpen}
