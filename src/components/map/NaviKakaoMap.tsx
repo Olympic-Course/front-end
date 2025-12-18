@@ -17,6 +17,7 @@ export default function NaviKakaoMap({
     places,
     isLoading,
     steps = [],
+    showPins,
 }: {
     places?: PlacesData;
     isLoading: boolean;
@@ -26,6 +27,7 @@ export default function NaviKakaoMap({
         longitude: number;
         stepOrder?: number;
     }[];
+    showPins: boolean;
 }) {
     const [loading] = useKakaoLoader({
         appkey: process.env.NEXT_PUBLIC_KAKAO_API_KEY!,
@@ -136,7 +138,7 @@ export default function NaviKakaoMap({
                 )}
 
                 {/* RESTROOM */}
-                {places?.RESTROOM?.map((p) => (
+                {showPins && places?.RESTROOM?.map((p) => (
                     <MapMarker
                         key={`restroom-${p.placeId}`}
                         position={{ lat: p.latitude, lng: p.longitude }}
@@ -149,7 +151,7 @@ export default function NaviKakaoMap({
                 ))}
 
                 {/* TRASHCAN */}
-                {places?.TRASHCAN?.map((p) => (
+                {showPins && places?.TRASHCAN?.map((p) => (
                     <MapMarker
                         key={`trash-${p.placeId}`}
                         position={{ lat: p.latitude, lng: p.longitude }}
@@ -162,7 +164,7 @@ export default function NaviKakaoMap({
                 ))}
 
                 {/* FOUNTAIN */}
-                {places?.FOUNTAIN?.map((p) => (
+                {showPins && places?.FOUNTAIN?.map((p) => (
                     <MapMarker
                         key={`fountain-${p.placeId}`}
                         position={{ lat: p.latitude, lng: p.longitude }}
@@ -175,7 +177,7 @@ export default function NaviKakaoMap({
                 ))}
 
                 {/* SMOKING BOOTH */}
-                {places?.SMOKING_BOOTH?.map((p) => (
+                {showPins && places?.SMOKING_BOOTH?.map((p) => (
                     <MapMarker
                         key={`smoking-${p.placeId}`}
                         position={{ lat: p.latitude, lng: p.longitude }}
@@ -188,7 +190,7 @@ export default function NaviKakaoMap({
                 ))}
 
                 {/* VENDING MACHINE */}
-                {places?.VENDING_MACHINE?.map((p) => (
+                {showPins && places?.VENDING_MACHINE?.map((p) => (
                     <MapMarker
                         key={`vm-${p.placeId}`}
                         position={{ lat: p.latitude, lng: p.longitude }}

@@ -15,6 +15,7 @@ export default function Page() {
     // "SMOKING_BOOTH",
     // "VENDING_MACHINE",
   ]);
+  const [pinState, setPinState] = useState<"pinOn" | "pinOff">("pinOn");
 
   // API 호출
   const { data, isLoading } = usePlacesGet(selectedCategories);
@@ -22,12 +23,20 @@ export default function Page() {
   return (
     <div className="h-screen relative">
       <div className="w-full h-full">
-        <KakaoMap places={data?.data} isLoading={isLoading} />
+        <KakaoMap
+          places={data?.data}
+          isLoading={isLoading}
+          showPins={pinState === "pinOn"}
+        />
       </div>
 
       <MapFilter
         selected={selectedCategories}
         onChange={setSelectedCategories}
+        pinState={pinState}
+        onPinToggle={() =>
+          setPinState(prev => (prev === "pinOn" ? "pinOff" : "pinOn"))
+        }
       />
     </div>
   );

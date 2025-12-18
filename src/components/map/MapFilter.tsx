@@ -9,10 +9,12 @@ import type { Category } from "@/types/map";
 interface MapFilterProps {
     selected: Category[];
     onChange: (next: Category[]) => void;
+    pinState: "pinOn" | "pinOff";
+    onPinToggle: () => void;
 }
 
-export default function MapFilter({ selected, onChange }: MapFilterProps) {
-    
+export default function MapFilter({ selected, onChange, pinState, onPinToggle }: MapFilterProps) {
+
     // 선택된 카테고리 토글
     const toggle = (key: Category) => {
         if (selected.includes(key)) {
@@ -23,15 +25,8 @@ export default function MapFilter({ selected, onChange }: MapFilterProps) {
     };
 
     const [showFilterTags, setShowFilterTags] = useState(true);
-    const [pinState, setPinState] = useState<"pinOn" | "pinOff">("pinOn");
+    //const [pinState, setPinState] = useState<"pinOn" | "pinOff">("pinOn");
 
-    // const handleFilterClick = (filterKey: string) => {
-    //     setActiveFilters((prev) =>
-    //         prev.includes(filterKey)
-    //             ? prev.filter((t) => t !== filterKey)
-    //             : [...prev, filterKey]
-    //     );
-    // };
 
     return (
         <>
@@ -44,9 +39,7 @@ export default function MapFilter({ selected, onChange }: MapFilterProps) {
                     />
                     <FilterSettingButton
                         type={pinState}
-                        onClick={() =>
-                            setPinState(prev => (prev === "pinOn" ? "pinOff" : "pinOn"))
-                        }
+                        onClick={onPinToggle}
                     />
                 </div>
             )}
@@ -61,9 +54,7 @@ export default function MapFilter({ selected, onChange }: MapFilterProps) {
                         />
                         <FilterSettingButton
                             type={pinState}
-                            onClick={() =>
-                                setPinState(prev => (prev === "pinOn" ? "pinOff" : "pinOn"))
-                            }
+                            onClick={onPinToggle}
                         />
                     </div>
 
